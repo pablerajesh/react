@@ -1,8 +1,8 @@
-import { ColDef } from "ag-grid-community";
+import { ColDef, RowSelectionOptions } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useEffect, useMemo, useState } from "react";
 import {
-  customerColDef,
+  customerColDefs,
   customerDefaultCallDef,
   ICustomer,
   IOrphanCustomersDisplayProps
@@ -11,10 +11,18 @@ import {
 const OrphanCustomersDisplay = ({
   orphanCustomers
 }: IOrphanCustomersDisplayProps) => {
-  const defaultColDef = useMemo(() => customerDefaultCallDef, []),
-    [colDef] = useState<ColDef<ICustomer>[]>(customerColDef),
+  const defaultColDef = useMemo<ColDef<ICustomer>>(
+      () => customerDefaultCallDef,
+      []
+    ),
+    [columnDefs] = useState<ColDef<ICustomer>[]>(customerColDefs),
     [rowData, setRowData] = useState<ICustomer[] | undefined>(orphanCustomers),
-    customersLoading = useMemo(() => rowData !== undefined, [rowData]);
+    customersLoading = useMemo(() => rowData !== undefined, [rowData]),
+    rowSelection = useMemo<RowSelectionOptions | "single" | "multiple">(() => {
+      return {
+        mode: "multiRow"
+      };
+    }, []);
 
   useEffect(() => {
     setRowData(orphanCustomers);
@@ -33,8 +41,9 @@ const OrphanCustomersDisplay = ({
       <AgGridReact
         loading={!customersLoading}
         rowData={rowData}
-        columnDefs={colDef}
+        columnDefs={columnDefs}
         defaultColDef={defaultColDef}
+        rowSelection={rowSelection}
       />
     </div>
   );

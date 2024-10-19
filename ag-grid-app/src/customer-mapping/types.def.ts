@@ -5,7 +5,6 @@ export interface ICustomer {
   name: string;
   isParent: boolean;
   parentId?: number;
-  isOrphan: boolean;
 }
 
 export interface IOrphanCustomersDisplayProps {
@@ -17,7 +16,17 @@ export const customerDefaultCallDef: ColDef = {
   sortable: true
 };
 
-export const customerColDef: ColDef<ICustomer>[] = [
-  { field: "id" },
-  { field: "name" }
+export const customerColDefs: ColDef<ICustomer>[] = [
+  {
+    field: "id",
+    headerName: "Customer Id",
+    cellDataType: "number",
+    editable: false
+  },
+  {
+    field: "name",
+    headerName: "Customer Name",
+    cellDataType: "string",
+    editable: false
+  }
 ];
