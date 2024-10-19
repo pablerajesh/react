@@ -15,17 +15,6 @@ const persistedCustomers: ICustomer[] = Array.from({ length: 10 }, (_, i) => {
   };
 });
 
-export const getParentCustomersFromBackend = () => {
-  const parentCustomers: ICustomer[] = persistedCustomers.filter(
-    customer => customer.isParent
-  );
-  return new Promise<ICustomer[]>(resolve => {
-    setTimeout(() => {
-      resolve(parentCustomers);
-    }, 1000);
-  });
-};
-
 export const getOrphanCustomersFromBackend = () => {
   const orphanCustomers: ICustomer[] = persistedCustomers.filter(
     customer => customer.parentId === undefined && !customer.isParent
