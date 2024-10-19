@@ -1,4 +1,8 @@
-import { ColDef, RowSelectionOptions } from "ag-grid-community";
+import {
+  ColDef,
+  RowNodeSelectedEvent,
+  RowSelectionOptions
+} from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -31,6 +35,9 @@ const OrphanCustomersDisplay = ({
     setRowData(orphanCustomers);
   }, [orphanCustomers]);
 
+  const handleRowSelected = (event: RowNodeSelectedEvent) =>
+    console.log(event.node.isSelected());
+
   return (
     <div
       id="orphan-customers-grid"
@@ -47,6 +54,7 @@ const OrphanCustomersDisplay = ({
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         rowSelection={rowSelection}
+        onRowSelected={handleRowSelected}
       />
     </div>
   );

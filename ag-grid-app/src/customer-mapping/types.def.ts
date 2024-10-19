@@ -15,14 +15,14 @@ export const customerDefaultCallDef: ColDef = {
 export const customerColDefs: ColDef<ICustomer>[] = [
   {
     field: "id",
-    headerName: "Customer Id",
+    headerName: "CUSTOMER ID",
     cellDataType: "number",
     editable: false
   },
   {
     field: "name",
-    headerName: "Customer Name",
-    cellDataType: "string",
+    headerName: "CUSTOMER NAME",
+    cellDataType: "text",
     editable: false
   }
 ];
