@@ -1,6 +1,6 @@
 import { ICustomer } from "./types.def";
 
-const persistedCustomers: ICustomer[] = Array.from({ length: 10 }, (_, i) => {
+const persistedCustomers: ICustomer[] = Array.from({ length: 100 }, (_, i) => {
   const id = i + 1,
     isParent = id === 1,
     parentId = [2, 3, 4, 5].includes(id) ? 1 : undefined,

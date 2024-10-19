@@ -24,7 +24,11 @@ const OrphanCustomersDisplay = ({
     <div
       id="orphan-customers-grid"
       className={"ag-theme-material"}
-      style={{ height: "100%", minHeight: "85vh", width: "100%" }}
+      style={{
+        height: "85vh",
+        minHeight: "85vh",
+        width: "100%"
+      }}
     >
       <AgGridReact
         loading={!customersLoading}
