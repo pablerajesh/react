@@ -4,9 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import {
   customerColDefs,
   customerDefaultCallDef,
-  ICustomer,
-  IOrphanCustomersDisplayProps
+  ICustomer
 } from "../types.def";
+
+export interface IOrphanCustomersDisplayProps {
+  orphanCustomers?: ICustomer[];
+}
 
 const OrphanCustomersDisplay = ({
   orphanCustomers

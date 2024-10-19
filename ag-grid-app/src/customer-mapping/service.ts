@@ -25,3 +25,11 @@ export const getOrphanCustomersFromBackend = () => {
     }, 0);
   });
 };
+
+export const getCustomerMappingsFromBackend = () => {
+  return new Promise<ICustomer[]>(resolve => {
+    setTimeout(() => {
+      resolve(persistedCustomers);
+    }, 0);
+  });
+};

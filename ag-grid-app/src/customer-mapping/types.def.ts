@@ -7,10 +7,6 @@ export interface ICustomer {
   parentId?: number;
 }
 
-export interface IOrphanCustomersDisplayProps {
-  orphanCustomers?: ICustomer[];
-}
-
 export const customerDefaultCallDef: ColDef = {
   flex: 1,
   sortable: true

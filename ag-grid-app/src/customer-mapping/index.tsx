@@ -6,6 +6,7 @@ import "ag-grid-community/styles/ag-theme-balham.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { useEffect, useState } from "react";
+import MappedCustomersDisplay from "./mapped-customers";
 import OrphanCustomersDisplay from "./orphan-customers";
 import { getOrphanCustomersFromBackend } from "./service";
 import { ICustomer } from "./types.def";
@@ -31,6 +32,7 @@ const CustomerMapping = () => {
           </Grid>
           <Grid size={{ xs: 6, md: 6 }}>
             <Typography variant="h5">Mapped customers</Typography>
+            <MappedCustomersDisplay />
           </Grid>
         </Grid>
       </Box>
