@@ -1,12 +1,9 @@
 import { Box, Container } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
-import "ag-grid-community/styles/ag-theme-balham.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import "ag-grid-community/styles/ag-theme-quartz.css";
 import { useEffect, useState } from "react";
-import MappedCustomersDisplay from "./mapped-customers";
+import ChildCustomersDisplay from "./mapped-customers";
 import OrphanCustomersDisplay from "./orphan-customers";
 import ParentCustomersAutocomplete from "./ParentCustomersAutocomplete";
 import {
@@ -68,7 +65,7 @@ const CustomerMapping = () => {
             <OrphanCustomersDisplay orphans={orphanCustomers} />
           </Grid>
           <Grid size={{ xs: 6, md: 6 }}>
-            <MappedCustomersDisplay
+            <ChildCustomersDisplay
               parent={selectedParent}
               children={childrenOfSelectedParent}
             />

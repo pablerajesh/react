@@ -1,12 +1,12 @@
 import { Typography } from "@mui/material";
 import { ICustomer } from "../types.def";
 
-export interface IMappedCustomersDisplayProps {
+export interface IChildCustomersDisplayProps {
   parent?: ICustomer;
   children?: ICustomer[];
 }
 
-const MappedCustomersDisplay = ({ parent }: IMappedCustomersDisplayProps) => {
+const ChildCustomersDisplay = ({ parent }: IChildCustomersDisplayProps) => {
   return (
     <>
       <Typography variant="h5">
@@ -16,4 +16,4 @@ const MappedCustomersDisplay = ({ parent }: IMappedCustomersDisplayProps) => {
   );
 };
 
-export default MappedCustomersDisplay;
+export default ChildCustomersDisplay;
