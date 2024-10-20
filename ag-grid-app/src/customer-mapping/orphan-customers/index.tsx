@@ -13,17 +13,19 @@ import {
 } from "../types.def";
 
 export interface IOrphanCustomersDisplayProps {
-  orphans?: ICustomer[];
+  orphanCustomers?: ICustomer[];
 }
 
-const OrphanCustomersDisplay = ({ orphans }: IOrphanCustomersDisplayProps) => {
+const OrphanCustomersDisplay = ({
+  orphanCustomers
+}: IOrphanCustomersDisplayProps) => {
   const defaultColDef = useMemo<ColDef<ICustomer>>(
       () => customerDefaultCallDef,
       []
     ),
     [columnDefs] = useState<ColDef<ICustomer>[]>(customerColDefs),
-    [rowData, setRowData] = useState<ICustomer[] | undefined>(orphans),
-    orphansLoading = useMemo(() => rowData !== undefined, [rowData]),
+    [rowData, setRowData] = useState<ICustomer[] | undefined>(orphanCustomers),
+    orphanCustomersLoading = useMemo(() => rowData !== undefined, [rowData]),
     rowSelection = useMemo<RowSelectionOptions | "single" | "multiple">(() => {
       return {
         mode: "multiRow"
@@ -31,8 +33,8 @@ const OrphanCustomersDisplay = ({ orphans }: IOrphanCustomersDisplayProps) => {
     }, []);
 
   useEffect(() => {
-    setRowData(orphans);
-  }, [orphans]);
+    setRowData(orphanCustomers);
+  }, [orphanCustomers]);
 
   const handleRowSelected = (event: RowNodeSelectedEvent) =>
     console.log(event.node.isSelected());
@@ -51,7 +53,7 @@ const OrphanCustomersDisplay = ({ orphans }: IOrphanCustomersDisplayProps) => {
       >
         <AgGridReact
           gridId="orphan-customers-grid"
-          loading={!orphansLoading}
+          loading={!orphanCustomersLoading}
           rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}

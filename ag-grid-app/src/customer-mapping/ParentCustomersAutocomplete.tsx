@@ -4,13 +4,13 @@ import { getCustomerAutocompleteOptions } from "./service";
 import { ICustomer } from "./types.def";
 
 export interface PasrentCustomersAutocompleteProps {
-  parents: ICustomer[];
-  onParentChange: (selectedParentId: number | undefined) => void;
+  parentCustomers: ICustomer[];
+  onParentCustomerChange: (selectedParentId: number | undefined) => void;
 }
 
 const ParentCustomersAutocomplete = ({
-  parents,
-  onParentChange
+  parentCustomers: parents,
+  onParentCustomerChange
 }: PasrentCustomersAutocompleteProps) => {
   const options = useMemo(() => {
     return getCustomerAutocompleteOptions(parents);
@@ -21,7 +21,7 @@ const ParentCustomersAutocomplete = ({
       options={options}
       sx={{ width: "100%" }}
       renderInput={params => <TextField {...params} label="Parent Customer" />}
-      onChange={(_, value) => onParentChange(value?.id)}
+      onChange={(_, value) => onParentCustomerChange(value?.id)}
     />
   );
 };

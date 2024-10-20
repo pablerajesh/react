@@ -9,20 +9,20 @@ import {
 } from "../types.def";
 
 export interface IChildCustomersDisplayProps {
-  parent?: ICustomer;
-  children?: ICustomer[];
+  parentCustomer?: ICustomer;
+  childCustomers?: ICustomer[];
 }
 
 const ChildCustomersDisplay = ({
-  parent,
-  children
+  parentCustomer,
+  childCustomers
 }: IChildCustomersDisplayProps) => {
   const defaultColDef = useMemo<ColDef<ICustomer>>(
       () => customerDefaultCallDef,
       []
     ),
     [columnDefs] = useState<ColDef<ICustomer>[]>(customerColDefs),
-    [rowData, setRowData] = useState<ICustomer[] | undefined>(children),
+    [rowData, setRowData] = useState<ICustomer[] | undefined>(childCustomers),
     rowSelection = useMemo<RowSelectionOptions | "single" | "multiple">(() => {
       return {
         mode: "multiRow"
@@ -30,13 +30,13 @@ const ChildCustomersDisplay = ({
     }, []);
 
   useEffect(() => {
-    setRowData(children);
-  }, [children]);
+    setRowData(childCustomers);
+  }, [childCustomers]);
 
   return (
     <Container sx={{ mt: 2 }}>
       <Typography variant="h5">
-        Child customers {parent && `(${parent.name})`}
+        Child customers {parentCustomer && `(${parentCustomer.name})`}
       </Typography>
       <div
         id="child-customers-grid-container"
