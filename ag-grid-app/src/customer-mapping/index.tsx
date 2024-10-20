@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
@@ -52,30 +52,26 @@ const CustomerMapping = () => {
   };
 
   return (
-    <Container sx={{ mt: 5, p: 5 }} maxWidth={false}>
-      <Box>
-        <Grid container spacing={5}>
-          <Grid size={{ xs: 6, md: 6 }}></Grid>
-          <Grid size={{ xs: 6, md: 6 }}>
-            <ParentCustomersAutocomplete
-              parentCustomers={parents}
-              onParentCustomerChange={handleParentChange}
-            />
-          </Grid>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={2} sx={{ p: 2 }}>
+        <Grid size={6}></Grid>
+        <Grid size={6}>
+          <ParentCustomersAutocomplete
+            parentCustomers={parents}
+            onParentCustomerChange={handleParentChange}
+          />
         </Grid>
-        <Grid container spacing={5} sx={{ mt: 3 }}>
-          <Grid size={{ xs: 6, md: 6 }} border={1} borderColor={"#e0e0e0"}>
-            <OrphanCustomersDisplay orphanCustomers={orphanCustomers} />
-          </Grid>
-          <Grid size={{ xs: 6, md: 6 }} border={1} borderColor={"#e0e0e0"}>
-            <ChildCustomersDisplay
-              parentCustomer={selectedParentCustomer}
-              childCustomers={childCustomersOfSelectedParent}
-            />
-          </Grid>
+        <Grid size={6} border={1} borderColor={"#e0e0e0"}>
+          <OrphanCustomersDisplay orphanCustomers={orphanCustomers} />
         </Grid>
-      </Box>
-    </Container>
+        <Grid size={6} border={1} borderColor={"#e0e0e0"}>
+          <ChildCustomersDisplay
+            parentCustomer={selectedParentCustomer}
+            childCustomers={childCustomersOfSelectedParent}
+          />
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
