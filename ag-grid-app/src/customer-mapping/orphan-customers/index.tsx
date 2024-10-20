@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import {
   ColDef,
   RowNodeSelectedEvent,
@@ -12,19 +13,17 @@ import {
 } from "../types.def";
 
 export interface IOrphanCustomersDisplayProps {
-  orphanCustomers?: ICustomer[];
+  orphans?: ICustomer[];
 }
 
-const OrphanCustomersDisplay = ({
-  orphanCustomers
-}: IOrphanCustomersDisplayProps) => {
+const OrphanCustomersDisplay = ({ orphans }: IOrphanCustomersDisplayProps) => {
   const defaultColDef = useMemo<ColDef<ICustomer>>(
       () => customerDefaultCallDef,
       []
     ),
     [columnDefs] = useState<ColDef<ICustomer>[]>(customerColDefs),
-    [rowData, setRowData] = useState<ICustomer[] | undefined>(orphanCustomers),
-    customersLoading = useMemo(() => rowData !== undefined, [rowData]),
+    [rowData, setRowData] = useState<ICustomer[] | undefined>(orphans),
+    orphansLoading = useMemo(() => rowData !== undefined, [rowData]),
     rowSelection = useMemo<RowSelectionOptions | "single" | "multiple">(() => {
       return {
         mode: "multiRow"
@@ -32,31 +31,35 @@ const OrphanCustomersDisplay = ({
     }, []);
 
   useEffect(() => {
-    setRowData(orphanCustomers);
-  }, [orphanCustomers]);
+    setRowData(orphans);
+  }, [orphans]);
 
   const handleRowSelected = (event: RowNodeSelectedEvent) =>
     console.log(event.node.isSelected());
 
   return (
-    <div
-      id="orphan-customers-grid"
-      className={"ag-theme-material"}
-      style={{
-        height: "85vh",
-        minHeight: "85vh",
-        width: "100%"
-      }}
-    >
-      <AgGridReact
-        loading={!customersLoading}
-        rowData={rowData}
-        columnDefs={columnDefs}
-        defaultColDef={defaultColDef}
-        rowSelection={rowSelection}
-        onRowSelected={handleRowSelected}
-      />
-    </div>
+    <>
+      <Typography variant="h5">Orphan customers</Typography>
+      <div
+        id="orphan-customers-grid"
+        className={"ag-theme-material"}
+        style={{
+          height: "85vh",
+          minHeight: "85vh",
+          width: "100%"
+        }}
+      >
+        <AgGridReact
+          gridId="orphan-customers-grid"
+          loading={!orphansLoading}
+          rowData={rowData}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          rowSelection={rowSelection}
+          onRowSelected={handleRowSelected}
+        />
+      </div>
+    </>
   );
 };
 

@@ -6,7 +6,7 @@ const persistedCustomers: ICustomer[] = Array.from({ length: 20 }, (_, i) => {
     parentId = [2, 3, 4, 5].includes(id)
       ? 1
       : [12, 13, 14, 15].includes(id)
-      ? 1
+      ? 11
       : undefined,
     isOrphan = parentId === undefined;
 
@@ -38,6 +38,19 @@ export const getParentCustomersFromBackend = (): Promise<ICustomer[]> => {
   return new Promise<ICustomer[]>(resolve => {
     setTimeout(() => {
       resolve(parentCustomers);
+    }, 0);
+  });
+};
+
+export const getChildCustomersFromBackend = (
+  parentId: number
+): Promise<ICustomer[]> => {
+  const childCustomers: ICustomer[] = persistedCustomers.filter(
+    customer => customer.parentId === parentId
+  );
+  return new Promise<ICustomer[]>(resolve => {
+    setTimeout(() => {
+      resolve(childCustomers);
     }, 0);
   });
 };
