@@ -1,4 +1,6 @@
 import { Autocomplete, TextField } from "@mui/material";
+import { useMemo } from "react";
+import { getCustomerAutocompleteOptions } from "./service";
 import { ICustomer } from "./types.def";
 
 export interface PasrentCustomersAutocompleteProps {
@@ -8,14 +10,16 @@ export interface PasrentCustomersAutocompleteProps {
 const ParentCustomersAutocomplete = ({
   parentCustomers
 }: PasrentCustomersAutocompleteProps) => {
-  console.log("parentCustomers", parentCustomers);
+  const options = useMemo(() => {
+    return getCustomerAutocompleteOptions(parentCustomers);
+  }, [parentCustomers]);
 
   return (
     <Autocomplete
-      disablePortal
-      options={[]}
+      options={options}
       sx={{ width: "100%" }}
       renderInput={params => <TextField {...params} label="Parent Customer" />}
+      onChange={(_, value) => console.log(value)}
     />
   );
 };

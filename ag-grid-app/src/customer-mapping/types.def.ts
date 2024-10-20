@@ -36,3 +36,11 @@ export const customerColDefs: ColDef<ICustomer>[] = [
     flex: 2
   }
 ];
+
+interface IAutoCompleteOption {
+  label: string;
+}
+export interface ICustomerAutocompleteOption extends IAutoCompleteOption {
+  id: number;
+  name: string;
+}

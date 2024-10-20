@@ -27,7 +27,6 @@ const CustomerMapping = () => {
     });
 
     getParentCustomersFromBackend().then(parentCustomers => {
-      console.log("parentCustomers", parentCustomers);
       setParentCustomers(parentCustomers);
     });
   }, []);

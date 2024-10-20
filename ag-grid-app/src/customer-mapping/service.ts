@@ -1,4 +1,4 @@
-import { ICustomer } from "./types.def";
+import { ICustomer, ICustomerAutocompleteOption } from "./types.def";
 
 const persistedCustomers: ICustomer[] = Array.from({ length: 20 }, (_, i) => {
   const id = i + 1,
@@ -20,7 +20,7 @@ const persistedCustomers: ICustomer[] = Array.from({ length: 20 }, (_, i) => {
   };
 });
 
-export const getOrphanCustomersFromBackend = () => {
+export const getOrphanCustomersFromBackend = (): Promise<ICustomer[]> => {
   const orphanCustomers: ICustomer[] = persistedCustomers.filter(
     customer => customer.parentId === undefined && !customer.isParent
   );
@@ -31,7 +31,7 @@ export const getOrphanCustomersFromBackend = () => {
   });
 };
 
-export const getParentCustomersFromBackend = () => {
+export const getParentCustomersFromBackend = (): Promise<ICustomer[]> => {
   const parentCustomers: ICustomer[] = persistedCustomers.filter(
     customer => customer.isParent
   );
@@ -41,3 +41,15 @@ export const getParentCustomersFromBackend = () => {
     }, 0);
   });
 };
+
+export const getCustomerAutocompleteOptions = (
+  customers: ICustomer[]
+): ICustomerAutocompleteOption[] =>
+  customers.map(customer => {
+    const option: ICustomerAutocompleteOption = {
+      id: customer.id,
+      name: customer.name,
+      label: customer.name
+    };
+    return option;
+  });
