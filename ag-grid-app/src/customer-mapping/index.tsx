@@ -62,7 +62,17 @@ const CustomerMapping = () => {
             onParentCustomerChange={handleParentChange}
           />
         </Grid>
-        <Grid size={6}></Grid>
+        <Grid
+          size={6}
+          container
+          direction="row"
+          justifyContent="flex-start"
+          alignContent={"flex-end"}
+        >
+          <Button variant="text" size="small">
+            Add new parent
+          </Button>
+        </Grid>
 
         <Grid size={6} border={1} borderColor={"#e0e0e0"}>
           <ChildCustomersDisplay
