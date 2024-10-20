@@ -3,11 +3,11 @@ import { ICustomer, ICustomerAutocompleteOption } from "./types.def";
 const persistedCustomers: ICustomer[] = Array.from({ length: 20 }, (_, i) => {
   const id = i + 1,
     isParent = [1, 11].includes(id),
-    parentId = [2, 3, 4, 5].includes(id)
-      ? 1
-      : [12, 13, 14, 15].includes(id)
-      ? 11
-      : undefined,
+    parentId = (id => {
+      if ([2, 3, 4, 5].includes(id)) return 1;
+      if ([12, 13, 14, 15].includes(id)) return 11;
+      return undefined;
+    })(id),
     isOrphan = parentId === undefined;
 
   return {
