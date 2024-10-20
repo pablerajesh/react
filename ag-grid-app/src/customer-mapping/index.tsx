@@ -1,6 +1,6 @@
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
@@ -64,32 +64,35 @@ const CustomerMapping = () => {
         </Grid>
         <Grid size={6}></Grid>
 
-        <Grid size={"grow"} border={1} borderColor={"#e0e0e0"}>
+        <Grid size={6} border={1} borderColor={"#e0e0e0"}>
           <ChildCustomersDisplay
             parentCustomer={selectedParentCustomer}
             childCustomers={childCustomersOfSelectedParent}
           />
         </Grid>
-        <Grid container size={"auto"} alignItems={"center"}>
-          <Stack spacing={2}>
-            <Button
-              size="large"
-              variant="contained"
-              startIcon={<KeyboardDoubleArrowLeftIcon />}
-            >
-              Add
-            </Button>
-            <Button
-              size="large"
-              variant="outlined"
-              endIcon={<KeyboardDoubleArrowRightIcon />}
-            >
-              Remove
-            </Button>
-          </Stack>
-        </Grid>
-        <Grid size={"grow"} border={1} borderColor={"#e0e0e0"}>
+        <Grid size={6} border={1} borderColor={"#e0e0e0"}>
           <OrphanCustomersDisplay orphanCustomers={orphanCustomers} />
+        </Grid>
+
+        <Grid size={6} container justifyContent={"flex-end"}>
+          <Button
+            fullWidth
+            size="large"
+            variant="outlined"
+            endIcon={<KeyboardDoubleArrowRightIcon />}
+          >
+            Remove
+          </Button>
+        </Grid>
+        <Grid size={6} container justifyContent={"flex-start"}>
+          <Button
+            fullWidth
+            size="large"
+            variant="contained"
+            startIcon={<KeyboardDoubleArrowLeftIcon />}
+          >
+            Add
+          </Button>
         </Grid>
       </Grid>
     </Box>
