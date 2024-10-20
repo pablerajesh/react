@@ -15,9 +15,9 @@ import { ICustomer } from "./types.def";
 
 const CustomerMapping = () => {
   const [orphanCustomers, setOrphanCustomers] = useState<
-    ICustomer[] | undefined
-  >(undefined);
-  const [parents, setParents] = useState<ICustomer[]>([]),
+      ICustomer[] | undefined
+    >(undefined),
+    [parents, setParents] = useState<ICustomer[]>([]),
     [selectedParentCustomer, setSelectedParentCustomer] = useState<
       ICustomer | undefined
     >(undefined),
