@@ -24,7 +24,8 @@ const CustomerMapping = () => {
       ICustomer | undefined
     >(undefined),
     [childCustomersOfSelectedParent, setChildCustomersOfSelectedParent] =
-      useState<ICustomer[] | undefined>(undefined);
+      useState<ICustomer[] | undefined>(undefined),
+    [selectedOrphanCustomerIds] = useState<number[]>([]);
 
   useEffect(() => {
     getOrphanCustomersFromBackend().then(orphanCustomers => {
@@ -52,6 +53,23 @@ const CustomerMapping = () => {
       setChildCustomersOfSelectedParent(childCustomers);
     });
   };
+
+  const isParentSelected = (): boolean => selectedParentCustomer !== undefined;
+
+  const atLeastOnOrphanCustomerSelected = (): boolean =>
+    selectedOrphanCustomerIds.length > 0;
+
+  const enableOrphaCustomerAdd = (): boolean =>
+    isParentSelected() && atLeastOnOrphanCustomerSelected();
+
+  const handleOrphanCustomerSelectionChange = (
+    customerId: number,
+    selected: boolean
+  ): void => {
+    if (selected) selectedOrphanCustomerIds.push(customerId);
+  };
+
+  console.log("isParentSelected", isParentSelected());
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -81,7 +99,12 @@ const CustomerMapping = () => {
           />
         </Grid>
         <Grid size={6} border={1} borderColor={"#e0e0e0"}>
-          <OrphanCustomersDisplay orphanCustomers={orphanCustomers} />
+          <OrphanCustomersDisplay
+            orphanCustomers={orphanCustomers}
+            onOrphanCustomerSelectionChange={
+              handleOrphanCustomerSelectionChange
+            }
+          />
         </Grid>
 
         <Grid size={6} container justifyContent={"flex-end"}>
@@ -100,6 +123,7 @@ const CustomerMapping = () => {
             size="large"
             variant="contained"
             startIcon={<KeyboardDoubleArrowLeftIcon />}
+            disabled={!enableOrphaCustomerAdd()}
           >
             Add
           </Button>

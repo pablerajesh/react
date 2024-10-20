@@ -14,10 +14,15 @@ import {
 
 export interface IOrphanCustomersDisplayProps {
   orphanCustomers?: ICustomer[];
+  onOrphanCustomerSelectionChange: (
+    orphanCustomerId: number,
+    selected: boolean
+  ) => void;
 }
 
 const OrphanCustomersDisplay = ({
-  orphanCustomers
+  orphanCustomers,
+  onOrphanCustomerSelectionChange
 }: IOrphanCustomersDisplayProps) => {
   const defaultColDef = useMemo<ColDef<ICustomer>>(
       () => customerDefaultCallDef,
@@ -36,8 +41,11 @@ const OrphanCustomersDisplay = ({
     setRowData(orphanCustomers);
   }, [orphanCustomers]);
 
-  const handleRowSelected = (event: RowNodeSelectedEvent) =>
-    console.log(event.node.isSelected());
+  const handleRowSelected = (event: RowNodeSelectedEvent) => {
+    const selected: boolean = !!event.node.isSelected(),
+      customerId: number = (event.node.data as ICustomer).id;
+    onOrphanCustomerSelectionChange(customerId, selected);
+  };
 
   return (
     <Container sx={{ mt: 2 }}>
