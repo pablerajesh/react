@@ -1,13 +1,18 @@
 import { ICustomer } from "./types.def";
 
-const persistedCustomers: ICustomer[] = Array.from({ length: 10 }, (_, i) => {
+const persistedCustomers: ICustomer[] = Array.from({ length: 20 }, (_, i) => {
   const id = i + 1,
-    isParent = id === 1,
-    parentId = [2, 3, 4, 5].includes(id) ? 1 : undefined,
+    isParent = [1, 11].includes(id),
+    parentId = [2, 3, 4, 5].includes(id)
+      ? 1
+      : [12, 13, 14, 15].includes(id)
+      ? 1
+      : undefined,
     isOrphan = parentId === undefined;
 
   return {
     id: id,
+    code: `CUST-${i + 1}`,
     name: `Customer ${i + 1}`,
     isParent: isParent,
     parentId: parentId,
@@ -26,10 +31,13 @@ export const getOrphanCustomersFromBackend = () => {
   });
 };
 
-export const getCustomerMappingsFromBackend = () => {
+export const getParentCustomersFromBackend = () => {
+  const parentCustomers: ICustomer[] = persistedCustomers.filter(
+    customer => customer.isParent
+  );
   return new Promise<ICustomer[]>(resolve => {
     setTimeout(() => {
-      resolve(persistedCustomers);
+      resolve(parentCustomers);
     }, 0);
   });
 };
