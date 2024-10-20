@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import {
   ColDef,
   RowNodeSelectedEvent,
@@ -38,14 +38,14 @@ const OrphanCustomersDisplay = ({ orphans }: IOrphanCustomersDisplayProps) => {
     console.log(event.node.isSelected());
 
   return (
-    <>
+    <Container sx={{ mt: 2 }}>
       <Typography variant="h5">Orphan customers</Typography>
       <div
-        id="orphan-customers-grid"
+        id="orphan-customers-grid-container"
         className={"ag-theme-material"}
         style={{
-          height: "85vh",
-          minHeight: "85vh",
+          height: "70vh",
+          minHeight: "70vh",
           width: "100%"
         }}
       >
@@ -59,7 +59,7 @@ const OrphanCustomersDisplay = ({ orphans }: IOrphanCustomersDisplayProps) => {
           onRowSelected={handleRowSelected}
         />
       </div>
-    </>
+    </Container>
   );
 };
 

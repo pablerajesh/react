@@ -36,23 +36,28 @@ const CustomerMapping = () => {
   }, []);
 
   const handleParentChange = (selectedParentId: number | undefined): void => {
-    if (selectedParentId !== undefined) {
-      const selectedParent: ICustomer | undefined = parents.find(
-        parent => parent.id === selectedParentId
-      );
-      setSelectedParent(selectedParent);
-
-      getChildCustomersFromBackend(selectedParentId).then(childCustomers => {
-        setChildrenOfSelectedParent(childCustomers);
-      });
+    debugger;
+    if (selectedParentId === undefined) {
+      setSelectedParent(undefined);
+      setChildrenOfSelectedParent([]);
+      return;
     }
+
+    const selectedParent: ICustomer | undefined = parents.find(
+      parent => parent.id === selectedParentId
+    );
+    setSelectedParent(selectedParent);
+
+    getChildCustomersFromBackend(selectedParentId).then(childCustomers => {
+      setChildrenOfSelectedParent(childCustomers);
+    });
   };
 
   return (
     <Container sx={{ mt: 5, p: 5 }} maxWidth={false}>
       <Box>
         <Grid container spacing={3}>
-          <Grid size={{ xs: 6, md: 6 }}>First</Grid>
+          <Grid size={{ xs: 6, md: 6 }}></Grid>
           <Grid size={{ xs: 6, md: 6 }}>
             <ParentCustomersAutocomplete
               parents={parents}
@@ -60,11 +65,11 @@ const CustomerMapping = () => {
             />
           </Grid>
         </Grid>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 6, md: 6 }}>
+        <Grid container spacing={5} sx={{ mt: 3 }}>
+          <Grid size={{ xs: 6, md: 6 }} border={1} borderColor={"#e0e0e0"}>
             <OrphanCustomersDisplay orphans={orphanCustomers} />
           </Grid>
-          <Grid size={{ xs: 6, md: 6 }}>
+          <Grid size={{ xs: 6, md: 6 }} border={1} borderColor={"#e0e0e0"}>
             <ChildCustomersDisplay
               parent={selectedParent}
               children={childrenOfSelectedParent}
