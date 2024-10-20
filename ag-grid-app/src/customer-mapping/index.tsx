@@ -36,7 +36,6 @@ const CustomerMapping = () => {
   }, []);
 
   const handleParentChange = (selectedParentId: number | undefined): void => {
-    debugger;
     if (selectedParentId === undefined) {
       setSelectedParent(undefined);
       setChildrenOfSelectedParent([]);
@@ -56,7 +55,7 @@ const CustomerMapping = () => {
   return (
     <Container sx={{ mt: 5, p: 5 }} maxWidth={false}>
       <Box>
-        <Grid container spacing={3}>
+        <Grid container spacing={5}>
           <Grid size={{ xs: 6, md: 6 }}></Grid>
           <Grid size={{ xs: 6, md: 6 }}>
             <ParentCustomersAutocomplete
