@@ -59,6 +59,7 @@ const OrphanCustomersDisplay = ({
           defaultColDef={defaultColDef}
           rowSelection={rowSelection}
           onRowSelected={handleRowSelected}
+          overlayNoRowsTemplate="No orphan customers to display..."
         />
       </div>
     </Container>

@@ -54,6 +54,7 @@ const ChildCustomersDisplay = ({
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowSelection={rowSelection}
+          overlayNoRowsTemplate="No child customers to display..."
         />
       </div>
     </Container>
