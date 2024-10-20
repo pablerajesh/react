@@ -19,7 +19,8 @@ const CustomerMapping = () => {
   const [orphanCustomers, setOrphanCustomers] = useState<
     ICustomer[] | undefined
   >(undefined);
-  const [parentCustomers, setParentCustomers] = useState<ICustomer[]>([]);
+  const [parentCustomers, setParentCustomers] = useState<ICustomer[]>([]),
+    [, setSelectedParentId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     getOrphanCustomersFromBackend().then(orphanCustomers => {
@@ -31,13 +32,20 @@ const CustomerMapping = () => {
     });
   }, []);
 
+  const handleParentCustomerChange = (
+    selectedParentId: number | undefined
+  ): void => setSelectedParentId(selectedParentId);
+
   return (
     <Container sx={{ mt: 5, p: 5 }} maxWidth={false}>
       <Box>
         <Grid container spacing={3}>
           <Grid size={{ xs: 6, md: 6 }}>First</Grid>
           <Grid size={{ xs: 6, md: 6 }}>
-            <ParentCustomersAutocomplete parentCustomers={parentCustomers} />
+            <ParentCustomersAutocomplete
+              parentCustomers={parentCustomers}
+              onParentCustomerChange={handleParentCustomerChange}
+            />
           </Grid>
         </Grid>
         <Grid container spacing={3}>

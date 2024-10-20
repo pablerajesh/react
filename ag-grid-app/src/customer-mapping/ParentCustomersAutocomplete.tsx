@@ -5,10 +5,12 @@ import { ICustomer } from "./types.def";
 
 export interface PasrentCustomersAutocompleteProps {
   parentCustomers: ICustomer[];
+  onParentCustomerChange: (selectedParentId: number | undefined) => void;
 }
 
 const ParentCustomersAutocomplete = ({
-  parentCustomers
+  parentCustomers,
+  onParentCustomerChange
 }: PasrentCustomersAutocompleteProps) => {
   const options = useMemo(() => {
     return getCustomerAutocompleteOptions(parentCustomers);
@@ -19,7 +21,7 @@ const ParentCustomersAutocomplete = ({
       options={options}
       sx={{ width: "100%" }}
       renderInput={params => <TextField {...params} label="Parent Customer" />}
-      onChange={(_, value) => console.log(value)}
+      onChange={(_, value) => onParentCustomerChange(value?.id)}
     />
   );
 };
