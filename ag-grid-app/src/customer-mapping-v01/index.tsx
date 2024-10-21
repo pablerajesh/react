@@ -5,15 +5,15 @@ import Grid from "@mui/material/Grid2";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import { useEffect, useState } from "react";
-import ChildCustomersDisplay from "./child-customers";
-import OrphanCustomersDisplay from "./orphan-customers";
-import ParentCustomersAutocomplete from "./ParentCustomersAutocomplete";
 import {
   getChildCustomersFromBackend,
   getOrphanCustomersFromBackend,
   getParentCustomersFromBackend
-} from "./service";
-import { ICustomer } from "./types.def";
+} from "../customer-mapping-common/service";
+import { ICustomer } from "../customer-mapping-common/types.def";
+import ChildCustomersDisplay from "./child-customers";
+import OrphanCustomersDisplay from "./orphan-customers";
+import ParentCustomersAutocomplete from "./ParentCustomersAutocomplete";
 
 const CustomerMapping = () => {
   const [orphanCustomers, setOrphanCustomers] = useState<

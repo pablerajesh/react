@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { useMemo } from "react";
-import { getCustomerAutocompleteOptions } from "./service";
-import { ICustomer } from "./types.def";
+import { getCustomerAutocompleteOptions } from "../customer-mapping-common/service";
+import { ICustomer } from "../customer-mapping-common/types.def";
 
 export interface PasrentCustomersAutocompleteProps {
   parentCustomers: ICustomer[];

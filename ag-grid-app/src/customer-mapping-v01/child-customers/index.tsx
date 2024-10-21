@@ -6,7 +6,7 @@ import {
   customerColDefs,
   customerDefaultCallDef,
   ICustomer
-} from "../types.def";
+} from "../../customer-mapping-common/types.def";
 
 export interface IChildCustomersDisplayProps {
   parentCustomer?: ICustomer;
