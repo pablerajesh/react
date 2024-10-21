@@ -69,8 +69,6 @@ const CustomerMapping = () => {
     if (selected) selectedOrphanCustomerIds.push(customerId);
   };
 
-  console.log("isParentSelected", isParentSelected());
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2} sx={{ p: 2 }}>
