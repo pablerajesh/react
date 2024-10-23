@@ -1,8 +1,8 @@
 import { Container, Typography } from "@mui/material";
 import {
   ColDef,
-  RowNodeSelectedEvent,
-  RowSelectionOptions
+  RowSelectionOptions,
+  SelectionChangedEvent
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useEffect, useMemo, useState } from "react";
@@ -15,8 +15,7 @@ import {
 export interface IOrphanCustomersDisplayProps {
   orphanCustomers?: ICustomer[];
   onOrphanCustomerSelectionChange: (
-    orphanCustomerId: number,
-    selected: boolean
+    selectedOrphanCustomers: ICustomer[]
   ) => void;
 }
 
@@ -41,10 +40,11 @@ const OrphanCustomersDisplay = ({
     setRowData(orphanCustomers);
   }, [orphanCustomers]);
 
-  const handleRowSelected = (event: RowNodeSelectedEvent) => {
-    const selected: boolean = !!event.node.isSelected(),
-      customerId: number = (event.node.data as ICustomer).id;
-    onOrphanCustomerSelectionChange(customerId, selected);
+  const handleSelectionChanged = (event: SelectionChangedEvent) => {
+    const selectedOrphanCustomers: ICustomer[] = event.api
+      .getSelectedNodes()
+      .map(node => node.data as ICustomer);
+    onOrphanCustomerSelectionChange(selectedOrphanCustomers);
   };
 
   return (
@@ -66,8 +66,8 @@ const OrphanCustomersDisplay = ({
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowSelection={rowSelection}
-          onRowSelected={handleRowSelected}
           overlayNoRowsTemplate="No orphan customers to display..."
+          onSelectionChanged={handleSelectionChanged}
         />
       </div>
     </Container>

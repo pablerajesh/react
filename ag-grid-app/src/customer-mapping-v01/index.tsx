@@ -62,11 +62,10 @@ const CustomerMapping = () => {
   const enableOrphaCustomerAdd = (): boolean =>
     isParentSelected() && atLeastOnOrphanCustomerSelected();
 
-  const handleOrphanCustomerSelectionChange = (
-    customerId: number,
-    selected: boolean
-  ): void => {
-    if (selected) selectedOrphanCustomerIds.push(customerId);
+  const handOrphanCustomerSelectionChange = (
+    selectedOrphanCustomers: ICustomer[]
+  ) => {
+    console.log("length", selectedOrphanCustomers.length);
   };
 
   return (
@@ -99,9 +98,7 @@ const CustomerMapping = () => {
         <Grid size={6} border={1} borderColor={"#e0e0e0"}>
           <OrphanCustomersDisplay
             orphanCustomers={orphanCustomers}
-            onOrphanCustomerSelectionChange={
-              handleOrphanCustomerSelectionChange
-            }
+            onOrphanCustomerSelectionChange={handOrphanCustomerSelectionChange}
           />
         </Grid>
 
