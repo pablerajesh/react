@@ -4,7 +4,7 @@ import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   getChildCustomersFromBackend,
   getOrphanCustomersFromBackend,
@@ -25,7 +25,9 @@ const CustomerMapping = () => {
     >(undefined),
     [childCustomersOfSelectedParent, setChildCustomersOfSelectedParent] =
       useState<ICustomer[] | undefined>(undefined),
-    [selectedOrphanCustomerIds] = useState<number[]>([]);
+    [selectedOrphanCustomers, setSelectedOrphanCustomers] = useState<
+      ICustomer[]
+    >([]);
 
   useEffect(() => {
     getOrphanCustomersFromBackend().then(orphanCustomers => {
@@ -54,19 +56,21 @@ const CustomerMapping = () => {
     });
   };
 
-  const isParentSelected = (): boolean => selectedParentCustomer !== undefined;
+  const parentCustomerSelected = (): boolean =>
+    selectedParentCustomer !== undefined;
 
-  const atLeastOnOrphanCustomerSelected = (): boolean =>
-    selectedOrphanCustomerIds.length > 0;
+  const atLeastOneOrphanCustomerSelected = (): boolean =>
+    selectedOrphanCustomers.length > 0;
 
   const enableOrphaCustomerAdd = (): boolean =>
-    isParentSelected() && atLeastOnOrphanCustomerSelected();
+    parentCustomerSelected() && atLeastOneOrphanCustomerSelected();
 
-  const handOrphanCustomerSelectionChange = (
-    selectedOrphanCustomers: ICustomer[]
-  ) => {
-    console.log("length", selectedOrphanCustomers.length);
-  };
+  const handleOrphanCustomerSelectionChange = useCallback(
+    (selectedOrphanCustomers: ICustomer[]) => {
+      setSelectedOrphanCustomers(selectedOrphanCustomers);
+    },
+    []
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -98,7 +102,9 @@ const CustomerMapping = () => {
         <Grid size={6} border={1} borderColor={"#e0e0e0"}>
           <OrphanCustomersDisplay
             orphanCustomers={orphanCustomers}
-            onOrphanCustomerSelectionChange={handOrphanCustomerSelectionChange}
+            onOrphanCustomerSelectionChange={
+              handleOrphanCustomerSelectionChange
+            }
           />
         </Grid>
 
