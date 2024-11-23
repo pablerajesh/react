@@ -1,28 +1,35 @@
 import { ICustomer, ICustomerAutocompleteOption } from "./types.def";
 
-const isParentCustomer = (id: number) => [1, 11].includes(id);
+const totalCustomers: number = 100,
+  slot: number = 10;
+
+const isParentCustomer = (id: number) => id - 1 === 0 || (id - 1) % slot === 0;
 
 const getParentCustomerId = (id: number) => {
-  if ([2, 3, 4, 5].includes(id)) return 1;
-  if ([12, 13, 14, 15].includes(id)) return 11;
+  const parentId = id - (id % slot) + 1,
+    lastDigit = id % 10;
+  if ([2, 3, 4, 5].includes(lastDigit)) return parentId;
   return undefined;
 };
 
-const persistedCustomers: ICustomer[] = Array.from({ length: 20 }, (_, i) => {
-  const id = i + 1,
-    isParent = isParentCustomer(id),
-    parentId = getParentCustomerId(id),
-    isOrphan = parentId === undefined;
+const persistedCustomers: ICustomer[] = Array.from(
+  { length: totalCustomers },
+  (_, i) => {
+    const id = i + 1,
+      isParent: boolean = isParentCustomer(id),
+      parentId: number | undefined = getParentCustomerId(id),
+      isOrphan: boolean = parentId === undefined;
 
-  return {
-    id: id,
-    code: `CUST-${i + 1}`,
-    name: `Customer ${i + 1}`,
-    isParent: isParent,
-    parentId: parentId,
-    isOrphan: isOrphan
-  };
-});
+    return {
+      id: id,
+      code: `CUST-${i + 1}`,
+      name: `Customer ${i + 1}`,
+      isParent: isParent,
+      parentId: parentId,
+      isOrphan: isOrphan
+    };
+  }
+);
 
 export const getOrphanCustomersFromBackend = (): Promise<ICustomer[]> => {
   const orphanCustomers: ICustomer[] = persistedCustomers.filter(
