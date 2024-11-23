@@ -1,6 +1,6 @@
 import { ICustomer, ICustomerAutocompleteOption } from "./types.def";
 
-const totalCustomers: number = 100,
+const totalCustomers: number = 20,
   slot: number = 10;
 
 const isParentCustomer = (id: number) => id - 1 === 0 || (id - 1) % slot === 0;
