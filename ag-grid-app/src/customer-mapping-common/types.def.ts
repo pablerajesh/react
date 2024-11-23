@@ -12,7 +12,7 @@ export interface ICustomerHierarchy extends ICustomer {
   path: string[];
 }
 
-export const customerDefaultCallDef: ColDef = {
+export const customerDefaultCollDef: ColDef = {
   flex: 1,
   sortable: true
 };

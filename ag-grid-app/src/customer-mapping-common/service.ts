@@ -83,7 +83,7 @@ export const getCustomerAutocompleteOptions = (
     return option;
   });
 
-export const getCustomerHierarchies = () => {
+export const getCustomerHierarchies = (): Promise<ICustomerHierarchy[]> => {
   const customers: ICustomer[] = persistedCustomers;
   const parents: ICustomer[] = customers.filter(customer => customer.isParent);
   const children: ICustomer[] = customers.filter(
@@ -100,9 +100,13 @@ export const getCustomerHierarchies = () => {
       path: path,
       ...child
     };
+
     return customerPath;
   });
 
-  console.log(customerHierarchies);
-  return customerHierarchies;
+  return new Promise<ICustomerHierarchy[]>(resolve => {
+    setTimeout(() => {
+      resolve(customerHierarchies);
+    }, 0);
+  });
 };

@@ -8,7 +8,7 @@ import { AgGridReact } from "ag-grid-react";
 import { useEffect, useMemo, useState } from "react";
 import {
   customerColDefs,
-  customerDefaultCallDef,
+  customerDefaultCollDef,
   ICustomer
 } from "../../customer-mapping-common/types.def";
 
@@ -24,7 +24,7 @@ const OrphanCustomersDisplay = ({
   onOrphanCustomerSelectionChange
 }: IOrphanCustomersDisplayProps) => {
   const defaultColDef = useMemo<ColDef<ICustomer>>(
-      () => customerDefaultCallDef,
+      () => customerDefaultCollDef,
       []
     ),
     [columnDefs] = useState<ColDef<ICustomer>[]>(customerColDefs),
