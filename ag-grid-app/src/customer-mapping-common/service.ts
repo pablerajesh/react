@@ -1,14 +1,15 @@
 import { ICustomer, ICustomerAutocompleteOption } from "./types.def";
 
 const totalCustomers: number = 20,
-  slot: number = 10;
+  slotSize: number = 10;
 
-const isParentCustomer = (id: number) => id - 1 === 0 || (id - 1) % slot === 0;
+const isParentCustomer = (id: number) =>
+  id - 1 === 0 || (id - 1) % slotSize === 0;
 
 const getParentCustomerId = (id: number) => {
-  const parentId = id - (id % slot) + 1,
-    lastDigit = id % 10;
-  if ([2, 3, 4, 5].includes(lastDigit)) return parentId;
+  const firstInTheCurrentSlot: number = id - (id % slotSize) + 1,
+    lastDigitOfId = id % 10;
+  if ([2, 3, 4, 5].includes(lastDigitOfId)) return firstInTheCurrentSlot;
   return undefined;
 };
 
