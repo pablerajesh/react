@@ -1,4 +1,8 @@
-import { ICustomer, ICustomerAutocompleteOption } from "./types.def";
+import {
+  ICustomer,
+  ICustomerAutocompleteOption,
+  ICustomerHierarchy
+} from "./types.def";
 
 const totalCustomers: number = 20,
   slotSize: number = 10;
@@ -78,3 +82,27 @@ export const getCustomerAutocompleteOptions = (
     };
     return option;
   });
+
+export const getCustomerHierarchies = () => {
+  const customers: ICustomer[] = persistedCustomers;
+  const parents: ICustomer[] = customers.filter(customer => customer.isParent);
+  const children: ICustomer[] = customers.filter(
+    customer => !customer.isParent && customer.parentId
+  );
+
+  const customerHierarchies: ICustomerHierarchy[] = children.map(child => {
+    const parent: ICustomer = parents.find(
+      parent => parent.id === child.parentId
+    ) as ICustomer;
+    const path: string[] = [parent.name, child.name];
+
+    const customerPath: ICustomerHierarchy = {
+      path: path,
+      ...child
+    };
+    return customerPath;
+  });
+
+  console.log(customerHierarchies);
+  return customerHierarchies;
+};

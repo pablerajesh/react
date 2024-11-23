@@ -8,6 +8,10 @@ export interface ICustomer {
   parentId?: number;
 }
 
+export interface ICustomerHierarchy extends ICustomer {
+  path: string[];
+}
+
 export const customerDefaultCallDef: ColDef = {
   flex: 1,
   sortable: true

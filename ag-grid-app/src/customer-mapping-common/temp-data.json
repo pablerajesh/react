@@ -1,0 +1,98 @@
+[
+  {
+    "path": [
+      "Customer 1",
+      "Customer 2"
+    ],
+    "id": 2,
+    "code": "CUST-2",
+    "name": "Customer 2",
+    "isParent": false,
+    "parentId": 1,
+    "isOrphan": false
+  },
+  {
+    "path": [
+      "Customer 1",
+      "Customer 3"
+    ],
+    "id": 3,
+    "code": "CUST-3",
+    "name": "Customer 3",
+    "isParent": false,
+    "parentId": 1,
+    "isOrphan": false
+  },
+  {
+    "path": [
+      "Customer 1",
+      "Customer 4"
+    ],
+    "id": 4,
+    "code": "CUST-4",
+    "name": "Customer 4",
+    "isParent": false,
+    "parentId": 1,
+    "isOrphan": false
+  },
+  {
+    "path": [
+      "Customer 1",
+      "Customer 5"
+    ],
+    "id": 5,
+    "code": "CUST-5",
+    "name": "Customer 5",
+    "isParent": false,
+    "parentId": 1,
+    "isOrphan": false
+  },
+  {
+    "path": [
+      "Customer 11",
+      "Customer 12"
+    ],
+    "id": 12,
+    "code": "CUST-12",
+    "name": "Customer 12",
+    "isParent": false,
+    "parentId": 11,
+    "isOrphan": false
+  },
+  {
+    "path": [
+      "Customer 11",
+      "Customer 13"
+    ],
+    "id": 13,
+    "code": "CUST-13",
+    "name": "Customer 13",
+    "isParent": false,
+    "parentId": 11,
+    "isOrphan": false
+  },
+  {
+    "path": [
+      "Customer 11",
+      "Customer 14"
+    ],
+    "id": 14,
+    "code": "CUST-14",
+    "name": "Customer 14",
+    "isParent": false,
+    "parentId": 11,
+    "isOrphan": false
+  },
+  {
+    "path": [
+      "Customer 11",
+      "Customer 15"
+    ],
+    "id": 15,
+    "code": "CUST-15",
+    "name": "Customer 15",
+    "isParent": false,
+    "parentId": 11,
+    "isOrphan": false
+  }
+]
