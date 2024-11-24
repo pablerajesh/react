@@ -1,4 +1,3 @@
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useEffect, useState } from "react";
@@ -44,13 +43,8 @@ const CustomerMapping = () => {
           <OrphanCustomersDisplay orphanCustomers={orphanCustomers} />
         </Grid>
         <Grid size={6} container justifyContent={"flex-end"}>
-          <Button
-            fullWidth
-            size="large"
-            variant="outlined"
-            endIcon={<KeyboardDoubleArrowRightIcon />}
-          >
-            Remove
+          <Button fullWidth size="large" variant="outlined">
+            Remove selected children
           </Button>
         </Grid>
         <Grid size={6} container justifyContent={"flex-start"}>

@@ -1,5 +1,5 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import Button from "@mui/material/Button";
+import { Button } from "@mui/material";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
@@ -9,7 +9,10 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import * as React from "react";
 
-const options = ["Add to existing parent", "Add to a new parent"];
+const options = [
+  "Add selected to existing parent",
+  "Add selected to a new parent"
+];
 
 export default function SplitButton() {
   const [open, setOpen] = React.useState(false);
