@@ -1,6 +1,10 @@
 import { Container, Typography } from "@mui/material";
 import "ag-grid-charts-enterprise";
-import { ColDef, RowSelectionOptions } from "ag-grid-community";
+import {
+  ColDef,
+  RowSelectionOptions,
+  SelectionChangedEvent
+} from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import { AgGridReact } from "ag-grid-react";
@@ -57,15 +61,22 @@ const CustomersWithParentsDisplay = ({
     setRowData(customerHierarchies);
   }, [customerHierarchies]);
 
+  const handleSelectionChanged = (event: SelectionChangedEvent) => {
+    const selectedOrphanCustomers: ICustomerHierarchy[] = event.api
+      .getSelectedNodes()
+      .map(node => node.data as ICustomerHierarchy);
+    console.log("[rp]", selectedOrphanCustomers);
+  };
+
   return (
     <Container sx={{ mt: 2 }}>
-      <Typography variant="h5">Orphan customers</Typography>
+      <Typography variant="h5">PARENT & CHILD CUSTOMERS</Typography>
       <div
         id="customers-tree-grid-container"
         className={"ag-theme-material"}
         style={{
-          height: "70vh",
-          minHeight: "70vh",
+          height: "75vh",
+          minHeight: "75vh",
           width: "100%"
         }}
       >
@@ -74,11 +85,12 @@ const CustomersWithParentsDisplay = ({
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           autoGroupColumnDef={autoGroupColumnDef}
-          groupDefaultExpanded={-1}
+          groupDefaultExpanded={0}
           treeData={true}
           getDataPath={getDataPath}
           rowSelection={rowSelection}
           overlayNoRowsTemplate="No customers to display..."
+          onSelectionChanged={handleSelectionChanged}
         />
       </div>
     </Container>
