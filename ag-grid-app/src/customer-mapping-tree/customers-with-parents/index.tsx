@@ -1,6 +1,6 @@
 import { Container, Typography } from "@mui/material";
 import "ag-grid-charts-enterprise";
-import { ColDef } from "ag-grid-community";
+import { ColDef, RowSelectionOptions } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import { AgGridReact } from "ag-grid-react";
@@ -43,6 +43,14 @@ const CustomersWithParentsDisplay = ({
       }
     };
   }, []);
+  const rowSelection = useMemo<
+    RowSelectionOptions | "single" | "multiple"
+  >(() => {
+    return {
+      mode: "multiRow",
+      groupSelects: "self"
+    };
+  }, []);
   const getDataPath = useCallback((data: any) => data.path, []);
 
   useEffect(() => {
@@ -69,6 +77,7 @@ const CustomersWithParentsDisplay = ({
           groupDefaultExpanded={-1}
           treeData={true}
           getDataPath={getDataPath}
+          rowSelection={rowSelection}
           overlayNoRowsTemplate="No customers to display..."
         />
       </div>
