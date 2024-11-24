@@ -41,12 +41,13 @@ const AccountGrid = () => {
       }}
     >
       <AgGridReact
+        rowData={formatChildren(mockAccounts)}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         treeData={true}
         getDataPath={data => data.hierarchy}
         autoGroupColumnDef={autoGroupColumnDef}
-        rowData={formatChildren(mockAccounts)}
+        rowSelection={"multiple"}
       />
     </div>
   );
