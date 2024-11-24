@@ -1,9 +1,10 @@
 import { Container, Typography } from "@mui/material";
+import "ag-grid-charts-enterprise";
 import { ColDef } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import { AgGridReact } from "ag-grid-react";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   customerDefaultCollDef,
   ICustomerHierarchy
@@ -21,13 +22,6 @@ const CustomersWithParentsDisplay = ({
   );
   const [columnDefs] = useState<ColDef<ICustomerHierarchy>[]>([
     {
-      field: "id",
-      headerName: "CUSTOMER ID",
-      cellDataType: "number",
-      editable: false,
-      flex: 1
-    },
-    {
       field: "code",
       headerName: "CUSTOMER CDOE",
       cellDataType: "text",
@@ -39,10 +33,20 @@ const CustomersWithParentsDisplay = ({
     () => customerDefaultCollDef,
     []
   );
+  const autoGroupColumnDef = useMemo<ColDef>(() => {
+    return {
+      headerName: "NAME",
+      minWidth: 280,
+      cellRenderer: "agGroupCellRenderer",
+      cellRendererParams: {
+        suppressCount: true
+      }
+    };
+  }, []);
+  const getDataPath = useCallback((data: any) => data.path, []);
 
   useEffect(() => {
     setRowData(customerHierarchies);
-    console.log(customerHierarchies);
   }, [customerHierarchies]);
 
   return (
@@ -61,6 +65,10 @@ const CustomersWithParentsDisplay = ({
           rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
+          autoGroupColumnDef={autoGroupColumnDef}
+          groupDefaultExpanded={-1}
+          treeData={true}
+          getDataPath={getDataPath}
           overlayNoRowsTemplate="No customers to display..."
         />
       </div>

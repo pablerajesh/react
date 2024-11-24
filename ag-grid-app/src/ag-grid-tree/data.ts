@@ -148,7 +148,7 @@ const files = [
   }
 ];
 
-export const customerHierarchiesData: ICustomerHierarchy[] = [
+export const mockCustomerHierarchies: ICustomerHierarchy[] = [
   {
     path: ["Customer 1", "Customer 2"],
     id: 2,
