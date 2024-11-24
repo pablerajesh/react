@@ -1,4 +1,6 @@
-import { Box } from "@mui/material";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useEffect, useState } from "react";
 import {
@@ -40,6 +42,26 @@ const CustomerMapping = () => {
         </Grid>
         <Grid size={6} border={1} borderColor={"#e0e0e0"}>
           <OrphanCustomersDisplay orphanCustomers={orphanCustomers} />
+        </Grid>
+        <Grid size={6} container justifyContent={"flex-end"}>
+          <Button
+            fullWidth
+            size="large"
+            variant="outlined"
+            endIcon={<KeyboardDoubleArrowRightIcon />}
+          >
+            Remove
+          </Button>
+        </Grid>
+        <Grid size={6} container justifyContent={"flex-start"}>
+          <Button
+            fullWidth
+            size="large"
+            variant="contained"
+            startIcon={<KeyboardDoubleArrowLeftIcon />}
+          >
+            Add
+          </Button>
         </Grid>
       </Grid>
     </Box>
