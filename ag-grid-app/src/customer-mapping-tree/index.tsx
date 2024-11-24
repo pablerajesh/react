@@ -1,4 +1,3 @@
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -11,6 +10,7 @@ import {
   ICustomer,
   ICustomerHierarchy
 } from "../customer-mapping-common/types.def";
+import SplitButton from "./components/SplitButton";
 import CustomersWithParentsDisplay from "./customers-with-parents";
 import OrphanCustomersDisplay from "./orphan-customers";
 
@@ -54,14 +54,7 @@ const CustomerMapping = () => {
           </Button>
         </Grid>
         <Grid size={6} container justifyContent={"flex-start"}>
-          <Button
-            fullWidth
-            size="large"
-            variant="contained"
-            startIcon={<KeyboardDoubleArrowLeftIcon />}
-          >
-            Add
-          </Button>
+          <SplitButton />
         </Grid>
       </Grid>
     </Box>
