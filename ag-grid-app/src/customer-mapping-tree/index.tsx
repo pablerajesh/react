@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useEffect, useState } from "react";
-import { mockCustomerHierarchies } from "../ag-grid-tree/data";
+import { getCustomerHierarchies } from "../customer-mapping-common/service";
 import { ICustomerHierarchy } from "../customer-mapping-common/types.def";
 import CustomersWithParentsDisplay from "./customers-with-parents";
 
@@ -11,10 +11,9 @@ const CustomerMapping = () => {
   >([]);
 
   useEffect(() => {
-    setCustomerHierarchies(mockCustomerHierarchies);
-    // getCustomerHierarchies().then(customerHierarchies => {
-    //   setCustomerHierarchies(customerHierarchies);
-    // });
+    getCustomerHierarchies().then(customerHierarchies => {
+      setCustomerHierarchies(customerHierarchies);
+    });
   }, []);
 
   return (
