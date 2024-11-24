@@ -84,23 +84,26 @@ export const getCustomerAutocompleteOptions = (
 
 export const getCustomerHierarchies = (): Promise<ICustomerHierarchy[]> => {
   const customers: ICustomer[] = persistedCustomers;
-  const parents: ICustomer[] = customers.filter(customer => customer.isParent);
-  const children: ICustomer[] = customers.filter(
-    customer => !customer.isParent && customer.parentId
+  const parents: ICustomer[] = persistedCustomers.filter(
+    customer => customer.isParent
   );
+  let customerHierarchies: ICustomerHierarchy[] = [];
 
-  const customerHierarchies: ICustomerHierarchy[] = children.map(child => {
-    const parent: ICustomer = parents.find(
-      parent => parent.id === child.parentId
-    ) as ICustomer;
-    const path: string[] = [parent.name, child.name];
-
-    const customerPath: ICustomerHierarchy = {
-      path: path,
-      ...child
-    };
-
-    return customerPath;
+  parents.forEach(parent => {
+    customerHierarchies.push({
+      path: [parent.name],
+      ...parent
+    });
+    const children: ICustomer[] = customers.filter(
+      customer => customer.parentId === parent.id
+    );
+    children.forEach(child => {
+      customerHierarchies.push({
+        path: [parent.name, child.name],
+        ...child
+      });
+    });
+    return customerHierarchies;
   });
 
   return new Promise<ICustomerHierarchy[]>(resolve => {
