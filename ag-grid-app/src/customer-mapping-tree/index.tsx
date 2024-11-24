@@ -11,6 +11,7 @@ const CustomerMapping = () => {
   >([]);
 
   useEffect(() => {
+    // setCustomerHierarchies(customerHierarchiesData);
     getCustomerHierarchies().then(customerHierarchies => {
       setCustomerHierarchies(customerHierarchies);
     });

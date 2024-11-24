@@ -5,6 +5,7 @@ export interface ICustomer {
   code: string;
   name: string;
   isParent: boolean;
+  isOrphan: boolean;
   parentId?: number;
 }
 

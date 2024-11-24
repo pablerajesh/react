@@ -1,7 +1,13 @@
 import { Container, Typography } from "@mui/material";
+import { ColDef } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { ICustomerHierarchy } from "../../customer-mapping-common/types.def";
+import { AgGridReact } from "ag-grid-react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  customerDefaultCollDef,
+  ICustomerHierarchy
+} from "../../customer-mapping-common/types.def";
 
 export interface CustomersWithParentsDisplayProp {
   customerHierarchies?: ICustomerHierarchy[];
@@ -10,7 +16,34 @@ export interface CustomersWithParentsDisplayProp {
 const CustomersWithParentsDisplay = ({
   customerHierarchies
 }: CustomersWithParentsDisplayProp) => {
-  console.log(customerHierarchies);
+  const [rowData, setRowData] = useState<ICustomerHierarchy[] | undefined>(
+    customerHierarchies
+  );
+  const [columnDefs] = useState<ColDef<ICustomerHierarchy>[]>([
+    {
+      field: "id",
+      headerName: "CUSTOMER ID",
+      cellDataType: "number",
+      editable: false,
+      flex: 1
+    },
+    {
+      field: "code",
+      headerName: "CUSTOMER CDOE",
+      cellDataType: "text",
+      editable: false,
+      flex: 2
+    }
+  ]);
+  const defaultColDef = useMemo<ColDef<ICustomerHierarchy>>(
+    () => customerDefaultCollDef,
+    []
+  );
+
+  useEffect(() => {
+    setRowData(customerHierarchies);
+    console.log(customerHierarchies);
+  }, [customerHierarchies]);
 
   return (
     <Container sx={{ mt: 2 }}>
@@ -24,7 +57,12 @@ const CustomersWithParentsDisplay = ({
           width: "100%"
         }}
       >
-        Grid goes here...
+        <AgGridReact
+          rowData={rowData}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          overlayNoRowsTemplate="No customers to display..."
+        />
       </div>
     </Container>
   );

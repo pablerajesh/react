@@ -20,19 +20,18 @@ const getParentCustomerId = (id: number) => {
 const persistedCustomers: ICustomer[] = Array.from(
   { length: totalCustomers },
   (_, i) => {
-    const id = i + 1,
-      isParent: boolean = isParentCustomer(id),
-      parentId: number | undefined = getParentCustomerId(id),
-      isOrphan: boolean = parentId === undefined;
+    const id = ++i,
+      parentId: number | undefined = getParentCustomerId(id);
 
-    return {
+    const persistedCustomers: ICustomer = {
       id: id,
       code: `CUST-${i + 1}`,
       name: `Customer ${i + 1}`,
-      isParent: isParent,
+      isParent: isParentCustomer(id),
       parentId: parentId,
-      isOrphan: isOrphan
+      isOrphan: parentId === undefined
     };
+    return persistedCustomers;
   }
 );
 
