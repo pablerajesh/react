@@ -4,7 +4,7 @@ import {
   ICustomerHierarchy
 } from "./types.def";
 
-const totalCustomers: number = 20,
+const totalCustomers: number = 30,
   slotSize: number = 10;
 
 const isParentCustomer = (id: number) =>
@@ -25,8 +25,8 @@ const persistedCustomers: ICustomer[] = Array.from(
 
     const persistedCustomers: ICustomer = {
       id: id,
-      code: `CUST-${i + 1}`,
-      name: `Customer ${i + 1}`,
+      code: `CUST-${i}`,
+      name: `Customer ${i}`,
       isParent: isParentCustomer(id),
       parentId: parentId,
       isOrphan: parentId === undefined
