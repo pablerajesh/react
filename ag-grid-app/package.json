@@ -18,6 +18,7 @@
     "@types/react-dom": "^18.3.1",
     "ag-grid-charts-enterprise": "^32.3.3",
     "ag-grid-community": "^32.3.3",
+    "ag-grid-enterprise": "^32.3.3",
     "ag-grid-react": "^32.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
