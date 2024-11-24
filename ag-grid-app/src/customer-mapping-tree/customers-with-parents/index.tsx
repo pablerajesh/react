@@ -22,40 +22,38 @@ const CustomersWithParentsDisplay = ({
   customerHierarchies
 }: CustomersWithParentsDisplayProp) => {
   const [rowData, setRowData] = useState<ICustomerHierarchy[] | undefined>(
-    customerHierarchies
-  );
-  const [columnDefs] = useState<ColDef<ICustomerHierarchy>[]>([
-    {
-      field: "code",
-      headerName: "CUSTOMER CDOE",
-      cellDataType: "text",
-      editable: false,
-      flex: 2
-    }
-  ]);
-  const defaultColDef = useMemo<ColDef<ICustomerHierarchy>>(
-    () => customerDefaultCollDef,
-    []
-  );
-  const autoGroupColumnDef = useMemo<ColDef>(() => {
-    return {
-      headerName: "NAME",
-      minWidth: 280,
-      cellRenderer: "agGroupCellRenderer",
-      cellRendererParams: {
-        suppressCount: true
+      customerHierarchies
+    ),
+    [columnDefs] = useState<ColDef<ICustomerHierarchy>[]>([
+      {
+        field: "code",
+        headerName: "CUSTOMER CDOE",
+        cellDataType: "text",
+        editable: false,
+        flex: 2
       }
-    };
-  }, []);
-  const rowSelection = useMemo<
-    RowSelectionOptions | "single" | "multiple"
-  >(() => {
-    return {
-      mode: "multiRow",
-      groupSelects: "self"
-    };
-  }, []);
-  const getDataPath = useCallback((data: any) => data.path, []);
+    ]),
+    defaultColDef = useMemo<ColDef<ICustomerHierarchy>>(
+      () => customerDefaultCollDef,
+      []
+    ),
+    autoGroupColumnDef = useMemo<ColDef>(() => {
+      return {
+        headerName: "NAME",
+        minWidth: 280,
+        cellRenderer: "agGroupCellRenderer",
+        cellRendererParams: {
+          suppressCount: true
+        }
+      };
+    }, []),
+    rowSelection = useMemo<RowSelectionOptions | "single" | "multiple">(() => {
+      return {
+        mode: "multiRow",
+        groupSelects: "self"
+      };
+    }, []),
+    getDataPath = useCallback((data: any) => data.path, []);
 
   useEffect(() => {
     setRowData(customerHierarchies);

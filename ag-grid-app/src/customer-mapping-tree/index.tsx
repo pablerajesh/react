@@ -1,18 +1,32 @@
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useEffect, useState } from "react";
-import { getCustomerHierarchies } from "../customer-mapping-common/service";
-import { ICustomerHierarchy } from "../customer-mapping-common/types.def";
+import {
+  getCustomerHierarchies,
+  getOrphanCustomersFromBackend
+} from "../customer-mapping-common/service";
+import {
+  ICustomer,
+  ICustomerHierarchy
+} from "../customer-mapping-common/types.def";
 import CustomersWithParentsDisplay from "./customers-with-parents";
+import OrphanCustomersDisplay from "./orphan-customers";
 
 const CustomerMapping = () => {
   const [customerHierarchies, setCustomerHierarchies] = useState<
-    ICustomerHierarchy[] | undefined
-  >([]);
+      ICustomerHierarchy[] | undefined
+    >([]),
+    [orphanCustomers, setOrphanCustomers] = useState<ICustomer[] | undefined>(
+      undefined
+    );
 
   useEffect(() => {
     getCustomerHierarchies().then(customerHierarchies => {
       setCustomerHierarchies(customerHierarchies);
+    });
+
+    getOrphanCustomersFromBackend().then(orphanCustomers => {
+      setOrphanCustomers(orphanCustomers);
     });
   }, []);
 
@@ -25,7 +39,7 @@ const CustomerMapping = () => {
           />
         </Grid>
         <Grid size={6} border={1} borderColor={"#e0e0e0"}>
-          Right
+          <OrphanCustomersDisplay orphanCustomers={orphanCustomers} />
         </Grid>
       </Grid>
     </Box>
