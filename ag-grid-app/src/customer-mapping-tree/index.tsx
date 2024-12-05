@@ -62,21 +62,23 @@ const CustomerMapping = () => {
         <Grid size={6} border={1} borderColor={"#e0e0e0"}>
           <OrphanCustomersDisplay orphanCustomers={orphanCustomers} />
         </Grid>
-        <Grid size={6} container justifyContent={"flex-start"}>
+        <Grid size={6} container justifyContent={"flex-end"}>
           <Button
             size="large"
             variant="outlined"
+            fullWidth={true}
             endIcon={<KeyboardDoubleArrowRightIcon />}
           >
             Remove selected children
           </Button>
         </Grid>
-        <Grid size={6} container justifyContent={"flex-start"}>
+        <Grid size={6} container justifyContent={"flex-end"}>
           <SplitButton
             props={{
               variant: "contained",
               color: "primary",
-              size: "large"
+              size: "large",
+              fullWidth: true
             }}
             startIcon={<KeyboardDoubleArrowLeftIcon />}
             buttonSpecs={buttonSpecs}
