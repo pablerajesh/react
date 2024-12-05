@@ -1,3 +1,5 @@
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useEffect, useState } from "react";
@@ -10,7 +12,6 @@ import {
   ICustomer,
   ICustomerHierarchy
 } from "../customer-mapping-common/types.def";
-
 import CustomersWithParentsDisplay from "./customers-with-parents";
 import OrphanCustomersDisplay from "./orphan-customers";
 
@@ -62,17 +63,22 @@ const CustomerMapping = () => {
           <OrphanCustomersDisplay orphanCustomers={orphanCustomers} />
         </Grid>
         <Grid size={6} container justifyContent={"flex-start"}>
-          <Button size="large" variant="outlined">
+          <Button
+            size="large"
+            variant="outlined"
+            endIcon={<KeyboardDoubleArrowRightIcon />}
+          >
             Remove selected children
           </Button>
         </Grid>
-        <Grid size={6} container justifyContent={"flex-end"}>
+        <Grid size={6} container justifyContent={"flex-start"}>
           <SplitButton
             props={{
               variant: "contained",
               color: "primary",
               size: "large"
             }}
+            startIcon={<KeyboardDoubleArrowLeftIcon />}
             buttonSpecs={buttonSpecs}
           />
         </Grid>

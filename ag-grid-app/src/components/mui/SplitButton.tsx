@@ -14,6 +14,7 @@ import { useMemo, useRef, useState } from "react";
 
 interface ISplitButtonProp {
   props?: ButtonGroupOwnProps;
+  startIcon?: React.ReactNode;
   buttonSpecs: IButtonSpec[];
 }
 
@@ -24,7 +25,7 @@ export interface IButtonSpec {
   onClick?: () => void;
 }
 
-const SplitButton = ({ props, buttonSpecs }: ISplitButtonProp) => {
+const SplitButton = ({ props, startIcon, buttonSpecs }: ISplitButtonProp) => {
   const [buttonMenuPopperOpen, setButtonMenuPopperOpen] =
       useState<boolean>(false),
     anchorRef = useRef<HTMLDivElement>(null),
@@ -55,7 +56,9 @@ const SplitButton = ({ props, buttonSpecs }: ISplitButtonProp) => {
   return (
     <>
       <ButtonGroup ref={anchorRef} {...props} aria-label="split button">
-        <Button onClick={handleButtonClick}>{selectedButtonText}</Button>
+        <Button startIcon={startIcon} onClick={handleButtonClick}>
+          {selectedButtonText}
+        </Button>
         <Button
           onClick={handleButtonToggle}
           aria-controls={buttonMenuPopperOpen ? "split-button-menu" : undefined}
@@ -88,14 +91,14 @@ const SplitButton = ({ props, buttonSpecs }: ISplitButtonProp) => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem={true}>
-                  {buttonSpecs.map(_buttonSpec => (
+                  {buttonSpecs.map(bs => (
                     <MenuItem
-                      key={_buttonSpec.id}
-                      disabled={_buttonSpec.disabled}
-                      selected={selectedButtonId === _buttonSpec.id}
-                      onClick={() => handleMenuItemClick(_buttonSpec)}
+                      key={bs.id}
+                      disabled={bs.disabled}
+                      selected={selectedButtonId === bs.id}
+                      onClick={() => handleMenuItemClick(bs)}
                     >
-                      {_buttonSpec.text}
+                      {bs.text}
                     </MenuItem>
                   ))}
                 </MenuList>
