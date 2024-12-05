@@ -75,8 +75,7 @@ const AccountGrid = () => {
         props={{
           variant: "contained",
           color: "warning",
-          size: "large",
-          fullWidth: true
+          size: "large"
         }}
         buttonSpecs={buttonSpecs}
       />
