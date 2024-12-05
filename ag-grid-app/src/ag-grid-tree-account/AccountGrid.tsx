@@ -4,6 +4,7 @@ import "ag-grid-community/styles/ag-theme-material.css";
 import "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo, useState } from "react";
+import SplitButton, { IButtonSpec } from "../components/mui/SplitButton";
 import { formatChildren, mockAccounts } from "./mock-accounts";
 
 const AccountGrid = () => {
@@ -30,26 +31,54 @@ const AccountGrid = () => {
     };
   }, []);
 
+  const buttonSpecs: IButtonSpec[] = [
+    {
+      id: 1,
+      text: "Send Email",
+      disabled: false,
+      onClick: () => {
+        console.log("[rp] Send Email");
+      }
+    },
+    {
+      id: 2,
+      text: "Schedule",
+      disabled: false,
+      onClick: () => {
+        console.log("[rp] Schedule Email");
+      }
+    }
+  ];
+
   return (
-    <div
-      className="ag-theme-material"
-      style={{
-        margin: "auto",
-        width: "100%",
-        height: "800px",
-        marginBottom: 20
-      }}
-    >
-      <AgGridReact
-        rowData={formatChildren(mockAccounts)}
-        columnDefs={columnDefs}
-        defaultColDef={defaultColDef}
-        treeData={true}
-        getDataPath={data => data.hierarchy}
-        autoGroupColumnDef={autoGroupColumnDef}
-        rowSelection={"multiple"}
+    <>
+      <div
+        className="ag-theme-material"
+        style={{
+          margin: "auto",
+          width: "100%",
+          height: "800px",
+          marginBottom: 20
+        }}
+      >
+        <AgGridReact
+          rowData={formatChildren(mockAccounts)}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          treeData={true}
+          getDataPath={data => data.hierarchy}
+          autoGroupColumnDef={autoGroupColumnDef}
+          rowSelection={"multiple"}
+        />
+      </div>
+      <SplitButton
+        props={{
+          variant: "contained",
+          color: "warning"
+        }}
+        buttonSpecs={buttonSpecs}
       />
-    </div>
+    </>
   );
 };
 export default AccountGrid;

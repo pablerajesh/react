@@ -4,6 +4,8 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import AccountGrid from "./ag-grid-tree-account/AccountGrid";
 
-export default function App() {
+const App = () => {
   return <AccountGrid />;
-}
+};
+
+export default App;
