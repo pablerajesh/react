@@ -2,6 +2,8 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-material.css";
 import { useEffect, useState } from "react";
 import SplitButton, { IButtonSpec } from "../components/mui/SplitButton";
 import {
@@ -14,6 +16,7 @@ import {
 } from "../customer-mapping-common/types.def";
 import CustomersWithParentsDisplay from "./customers-with-parents";
 import OrphanCustomersDisplay from "./orphan-customers";
+import "./styles.css";
 
 const CustomerMapping = () => {
   const [customerHierarchies, setCustomerHierarchies] = useState<

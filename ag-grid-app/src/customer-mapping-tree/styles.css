@@ -1,0 +1,5 @@
+.ag-theme-material,
+.ag-theme-material-dark {
+  --ag-checkbox-checked-color: #2196f3;
+  --ag-checkbox-indeterminate-color: grey;
+}
