@@ -10,7 +10,7 @@ import {
   Paper,
   Popper
 } from "@mui/material";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 interface ISplitButtonProp {
   props?: ButtonGroupOwnProps;
@@ -25,39 +25,43 @@ export interface IButtonSpec {
 }
 
 const SplitButton = ({ props, buttonSpecs }: ISplitButtonProp) => {
-  const [open, setOpen] = useState<boolean>(false),
-    handleToggle = () => setOpen(prev => !prev),
+  const [buttonMenuPopperOpen, setButtonMenuPopperOpen] =
+      useState<boolean>(false),
     anchorRef = useRef<HTMLDivElement>(null),
-    [selectedButtonSpecId, setSelectedButtonSpecId] = useState<number>(1);
+    [selectedButtonId, setSelectedButtonId] = useState<number>(1);
+
+  const handleButtonToggle = () =>
+    setButtonMenuPopperOpen(openPreviously => !openPreviously);
+
+  const selectedButtonText = useMemo(
+    () => buttonSpecs.find(b => b.id === selectedButtonId)?.text,
+    [selectedButtonId]
+  );
 
   const handleClose = (event: Event) => {
     if (!anchorRef.current?.contains(event.target as HTMLElement))
-      setOpen(false);
+      setButtonMenuPopperOpen(false);
   };
 
   const handleMenuItemClick = (selectedButtonSpec: IButtonSpec) => {
-    setSelectedButtonSpecId(selectedButtonSpec.id);
-    setOpen(false);
+    setSelectedButtonId(selectedButtonSpec.id);
+    setButtonMenuPopperOpen(false);
   };
 
-  const handleClick = () =>
-    buttonSpecs.find(b => b.id === selectedButtonSpecId)?.onClick?.();
+  const handleButtonClick = () =>
+    buttonSpecs.find(b => b.id === selectedButtonId)?.onClick?.();
 
   if (buttonSpecs.length === 0) return <></>;
-
   return (
     <>
       <ButtonGroup ref={anchorRef} {...props} aria-label="split button">
-        <Button onClick={handleClick}>
-          {buttonSpecs.find(b => b.id === selectedButtonSpecId)?.text}
-        </Button>
+        <Button onClick={handleButtonClick}>{selectedButtonText}</Button>
         <Button
-          size="small"
-          aria-controls={open ? "split-button-menu" : undefined}
-          aria-expanded={open ? "true" : undefined}
+          aria-controls={buttonMenuPopperOpen ? "split-button-menu" : undefined}
+          aria-expanded={buttonMenuPopperOpen ? "true" : undefined}
           aria-label="Select action"
           aria-haspopup="menu"
-          onClick={handleToggle}
+          onClick={handleButtonToggle}
           sx={{ borderLeft: "1px solid #fff", width: "auto" }}
         >
           <ArrowDropDownIcon />
@@ -67,9 +71,10 @@ const SplitButton = ({ props, buttonSpecs }: ISplitButtonProp) => {
         sx={{ zIndex: 1 }}
         anchorEl={anchorRef.current}
         id="split-button-menu"
-        open={open}
+        open={buttonMenuPopperOpen}
         transition={true}
         disablePortal={true}
+        placement="bottom-end"
       >
         {({ TransitionProps, placement }) => (
           <Grow
@@ -86,7 +91,7 @@ const SplitButton = ({ props, buttonSpecs }: ISplitButtonProp) => {
                     <MenuItem
                       key={_buttonSpec.id}
                       disabled={_buttonSpec.disabled}
-                      selected={selectedButtonSpecId === _buttonSpec.id}
+                      selected={selectedButtonId === _buttonSpec.id}
                       onClick={() => handleMenuItemClick(_buttonSpec)}
                     >
                       {_buttonSpec.text}
