@@ -57,12 +57,13 @@ const SplitButton = ({ props, buttonSpecs }: ISplitButtonProp) => {
       <ButtonGroup ref={anchorRef} {...props} aria-label="split button">
         <Button onClick={handleButtonClick}>{selectedButtonText}</Button>
         <Button
+          onClick={handleButtonToggle}
           aria-controls={buttonMenuPopperOpen ? "split-button-menu" : undefined}
           aria-expanded={buttonMenuPopperOpen ? "true" : undefined}
           aria-label="Select action"
           aria-haspopup="menu"
-          onClick={handleButtonToggle}
-          sx={{ borderLeft: "1px solid #fff", width: "auto" }}
+          size="small"
+          sx={{ borderLeft: "1px solid #fff" }}
         >
           <ArrowDropDownIcon />
         </Button>

@@ -74,7 +74,8 @@ const AccountGrid = () => {
       <SplitButton
         props={{
           variant: "contained",
-          color: "warning"
+          color: "warning",
+          size: "large"
         }}
         buttonSpecs={buttonSpecs}
       />
