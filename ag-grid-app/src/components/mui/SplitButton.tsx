@@ -63,7 +63,7 @@ const SplitButton = ({ props, buttonSpecs }: ISplitButtonProp) => {
           aria-label="Select action"
           aria-haspopup="menu"
           size="small"
-          sx={{ borderLeft: "1px solid #fff" }}
+          sx={{ borderLeft: "1px solid #fff", width: "auto" }}
         >
           <ArrowDropDownIcon />
         </Button>
