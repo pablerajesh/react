@@ -25,7 +25,7 @@ const CustomerMapping = () => {
     [orphanCustomers, setOrphanCustomers] = useState<ICustomer[] | undefined>(
       undefined
     ),
-    buttonSpecs: IButtonSpec[] = [
+    [buttonSpecs] = useState<IButtonSpec[]>([
       {
         id: 1,
         text: "Add selected to existing parent",
@@ -42,7 +42,7 @@ const CustomerMapping = () => {
           console.log("[rp] Adding selected to a new parent");
         }
       }
-    ];
+    ]);
 
   useEffect(() => {
     getCustomerHierarchies().then(customerHierarchies => {

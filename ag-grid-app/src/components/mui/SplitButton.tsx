@@ -21,7 +21,7 @@ interface ISplitButtonProp {
 export interface IButtonSpec {
   id: number;
   text: string;
-  disabled: boolean;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
@@ -52,11 +52,20 @@ const SplitButton = ({ props, startIcon, buttonSpecs }: ISplitButtonProp) => {
   const handleButtonClick = () =>
     buttonSpecs.find(b => b.id === selectedButtonId)?.onClick?.();
 
+  const selectedButtonIsDisabled = useMemo(
+    () => buttonSpecs.find(b => b.id === selectedButtonId)?.disabled,
+    [selectedButtonId]
+  );
+
   if (buttonSpecs.length === 0) return <></>;
   return (
     <>
       <ButtonGroup ref={anchorRef} {...props} aria-label="split button">
-        <Button startIcon={startIcon} onClick={handleButtonClick}>
+        <Button
+          disabled={selectedButtonIsDisabled}
+          startIcon={startIcon}
+          onClick={handleButtonClick}
+        >
           {selectedButtonText}
         </Button>
         <Button

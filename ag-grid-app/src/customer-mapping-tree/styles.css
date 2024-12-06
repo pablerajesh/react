@@ -1,5 +1,10 @@
 .ag-theme-material,
 .ag-theme-material-dark {
-  --ag-checkbox-checked-color: #2196f3;
   --ag-checkbox-indeterminate-color: grey;
+  --ag-checkbox-unchecked-color: #333;
+  --ag-checkbox-checked-color: #2196f3;
+  --ag-checkbox-border-radius: 2px;
+  --ag-checkbox-unchecked-color: #797e87ff;
+  --ag-input-disabled-border-color: #3a434eff;
+  --ag-input-disabled-background-color: #68686e12;
 }
