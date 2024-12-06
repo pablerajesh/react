@@ -3,6 +3,7 @@ import {
   Button,
   ButtonGroup,
   ButtonGroupOwnProps,
+  ButtonOwnProps,
   ClickAwayListener,
   Grow,
   MenuItem,
@@ -21,7 +22,7 @@ interface ISplitButtonProp {
 export interface IButtonSpec {
   id: number;
   text: string;
-  disabled?: boolean;
+  props?: ButtonOwnProps;
   onClick?: () => void;
 }
 
@@ -52,8 +53,8 @@ const SplitButton = ({ props, startIcon, buttonSpecs }: ISplitButtonProp) => {
   const handleButtonClick = () =>
     buttonSpecs.find(b => b.id === selectedButtonId)?.onClick?.();
 
-  const selectedButtonIsDisabled = useMemo(
-    () => buttonSpecs.find(b => b.id === selectedButtonId)?.disabled,
+  const selectedButtonProps = useMemo(
+    () => buttonSpecs.find(b => b.id === selectedButtonId)?.props,
     [selectedButtonId]
   );
 
@@ -62,9 +63,9 @@ const SplitButton = ({ props, startIcon, buttonSpecs }: ISplitButtonProp) => {
     <>
       <ButtonGroup ref={anchorRef} {...props} aria-label="split button">
         <Button
-          disabled={selectedButtonIsDisabled}
           startIcon={startIcon}
           onClick={handleButtonClick}
+          {...selectedButtonProps}
         >
           {selectedButtonText}
         </Button>
@@ -103,7 +104,7 @@ const SplitButton = ({ props, startIcon, buttonSpecs }: ISplitButtonProp) => {
                   {buttonSpecs.map(bs => (
                     <MenuItem
                       key={bs.id}
-                      disabled={bs.disabled}
+                      disabled={bs.props?.disabled}
                       selected={selectedButtonId === bs.id}
                       onClick={() => handleMenuItemClick(bs)}
                     >

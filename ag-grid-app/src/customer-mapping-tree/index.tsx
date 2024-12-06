@@ -29,17 +29,23 @@ const CustomerMapping = () => {
       {
         id: 1,
         text: "Add selected to existing parent",
-        disabled: false,
         onClick: () => {
           console.log("[rp] Adding selected to existing parent");
+        },
+        props: {
+          sx: { width: "22rem" },
+          disabled: false
         }
       },
       {
         id: 2,
         text: "Add selected to a new parent",
-        disabled: false,
         onClick: () => {
           console.log("[rp] Adding selected to a new parent");
+        },
+        props: {
+          sx: { width: "22rem" },
+          disabled: false
         }
       }
     ]);
@@ -69,8 +75,9 @@ const CustomerMapping = () => {
           <Button
             size="large"
             variant="outlined"
-            fullWidth={true}
+            fullWidth={false}
             endIcon={<KeyboardDoubleArrowRightIcon />}
+            sx={{ width: "22rem" }}
           >
             Remove selected children
           </Button>
@@ -81,7 +88,7 @@ const CustomerMapping = () => {
               variant: "contained",
               color: "primary",
               size: "large",
-              fullWidth: true
+              fullWidth: false
             }}
             startIcon={<KeyboardDoubleArrowLeftIcon />}
             buttonSpecs={buttonSpecs}

@@ -35,7 +35,6 @@ const AccountGrid = () => {
     {
       id: 1,
       text: "Send Email",
-      disabled: false,
       onClick: () => {
         console.log("[rp] Send Email");
       }
@@ -43,7 +42,6 @@ const AccountGrid = () => {
     {
       id: 2,
       text: "Schedule",
-      disabled: false,
       onClick: () => {
         console.log("[rp] Schedule Email");
       }
