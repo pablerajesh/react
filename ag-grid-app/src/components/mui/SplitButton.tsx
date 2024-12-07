@@ -82,7 +82,7 @@ const SplitButton = ({ props, startIcon, buttonSpecs }: ISplitButtonProp) => {
         </Button>
       </ButtonGroup>
       <Popper
-        sx={{ zIndex: 1 }}
+        sx={{ zIndex: 1, width: anchorRef.current?.clientWidth }}
         anchorEl={anchorRef.current}
         id="split-button-menu"
         open={buttonMenuPopperOpen}
