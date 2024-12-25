@@ -62,11 +62,13 @@ const CustomerMappingDnd = () => {
     const onOrphanCustomersGridRowDragEnter = (
         _event: RowDragEnterEvent
     ): void => {
-        console.log("[rp] onOrphanCustomersGridRowDragEnter");
+        // console.log("[rp] Start: ", _event.nodes);
     };
 
     const onParentChildrenGridRowDragEnd = (_event: RowDragEndEvent): void => {
-        console.log("[rp] onParentChildrenGridRowDragEnd");
+        console.log("[rp] Orphans: ", _event.nodes);
+        console.log("[rp] Over node: ", _event.overNode?.data);
+        console.log("[rp] Parent: ", _event.overNode?.parent?.data);
     };
 
     return (
