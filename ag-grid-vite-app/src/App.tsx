@@ -1,5 +1,5 @@
-function App() {
-  return <h1>Sample App...</h1>;
-}
+import CustomerMappingDnd from "./customer-mapping-dnd";
+
+const App = () => <CustomerMappingDnd />;
 
 export default App;
