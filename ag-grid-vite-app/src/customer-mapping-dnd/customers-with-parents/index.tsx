@@ -1,5 +1,10 @@
 import { Container, Typography } from "@mui/material";
-import { ColDef, GetDataPath, GridReadyEvent } from "ag-grid-community";
+import {
+    ColDef,
+    GetDataPath,
+    GridReadyEvent,
+    RowDragEndEvent
+} from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -11,12 +16,14 @@ export interface CustomersWithParentsDisplayProp {
     customerHierarchies?: ICustomerHierarchy[];
     gridContainerRef: React.MutableRefObject<HTMLDivElement | null>;
     onGridReady: (event: GridReadyEvent) => void;
+    onRowDragEnd: (event: RowDragEndEvent) => void;
 }
 
 export const CustomersWithParentsDisplay = ({
     customerHierarchies,
     gridContainerRef,
-    onGridReady
+    onGridReady,
+    onRowDragEnd
 }: CustomersWithParentsDisplayProp) => {
     const [rowData, setRowData] = useState<ICustomerHierarchy[] | undefined>(
         customerHierarchies
@@ -80,6 +87,7 @@ export const CustomersWithParentsDisplay = ({
                     suppressRowClickSelection={true}
                     getDataPath={getDataPath}
                     onGridReady={onGridReady}
+                    onRowDragEnd={onRowDragEnd}
                 />
             </div>
         </Container>

@@ -1,6 +1,11 @@
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { GridApi, GridReadyEvent } from "ag-grid-community";
+import {
+    GridApi,
+    GridReadyEvent,
+    RowDragEndEvent,
+    RowDragEnterEvent
+} from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import { useEffect, useRef, useState } from "react";
@@ -35,14 +40,6 @@ const CustomerMappingDnd = () => {
         });
     }, []);
 
-    const handleParentChildGridReady = (event: GridReadyEvent): void => {
-        setParentChildGridApi(event.api);
-    };
-
-    const handleOrphansGridReady = (event: GridReadyEvent): void => {
-        setOrphansGridApi(event.api);
-    };
-
     useEffect(() => {
         if (parentChildGridApi && orphansGridApi) {
             orphansGridApi.addRowDropZone(
@@ -53,6 +50,24 @@ const CustomerMappingDnd = () => {
             );
         }
     }, [parentChildGridApi, orphansGridApi]);
+
+    const handleParentChildGridReady = (event: GridReadyEvent): void => {
+        setParentChildGridApi(event.api);
+    };
+
+    const handleOrphansGridReady = (event: GridReadyEvent): void => {
+        setOrphansGridApi(event.api);
+    };
+
+    const onOrphanCustomersGridRowDragEnter = (
+        _event: RowDragEnterEvent
+    ): void => {
+        console.log("[rp] onOrphanCustomersGridRowDragEnter");
+    };
+
+    const onParentChildrenGridRowDragEnd = (_event: RowDragEndEvent): void => {
+        console.log("[rp] onParentChildrenGridRowDragEnd");
+    };
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -70,6 +85,7 @@ const CustomerMappingDnd = () => {
                         customerHierarchies={customerHierarchies}
                         gridContainerRef={parentChildGridContainrRef}
                         onGridReady={handleParentChildGridReady}
+                        onRowDragEnd={onParentChildrenGridRowDragEnd}
                     />
                 </Grid>
                 <Grid
@@ -81,6 +97,7 @@ const CustomerMappingDnd = () => {
                         orphanCustomers={orphanCustomers}
                         gridContainerRef={orphansGridContainrRef}
                         onGridReady={handleOrphansGridReady}
+                        onRowDragEnter={onOrphanCustomersGridRowDragEnter}
                     />
                 </Grid>
             </Grid>
