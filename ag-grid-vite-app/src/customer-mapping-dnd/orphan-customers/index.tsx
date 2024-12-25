@@ -47,6 +47,8 @@ export const OrphanCustomersDisplay = ({
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
                     rowSelection={"multiple"}
+                    rowDragManaged={true}
+                    rowDragMultiRow={true}
                     animateRows={true}
                     overlayNoRowsTemplate="No orphan customers to display..."
                 />

@@ -25,6 +25,7 @@ export const customerColDefs: ColDef<ICustomer>[] = [
         cellDataType: "text",
         headerCheckboxSelection: true,
         checkboxSelection: true,
+        rowDrag: true,
         editable: false,
         flex: 2
     },
