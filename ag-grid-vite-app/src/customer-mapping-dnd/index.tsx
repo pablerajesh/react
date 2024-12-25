@@ -12,7 +12,7 @@ import CustomersWithParentsDisplay from "./customers-with-parents";
 import OrphanCustomersDisplay from "./orphan-customers";
 
 const CustomerMappingDnd = () => {
-    const [, setCustomerHierarchies] = useState<
+    const [customerHierarchies, setCustomerHierarchies] = useState<
         ICustomerHierarchy[] | undefined
     >([]);
     const [orphanCustomers, setOrphanCustomers] = useState<
@@ -41,7 +41,9 @@ const CustomerMappingDnd = () => {
                     border={1}
                     borderColor={"#e0e0e0"}
                 >
-                    <CustomersWithParentsDisplay />
+                    <CustomersWithParentsDisplay
+                        customerHierarchies={customerHierarchies}
+                    />
                 </Grid>
                 <Grid
                     size={6}

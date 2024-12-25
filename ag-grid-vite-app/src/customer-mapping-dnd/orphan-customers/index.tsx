@@ -1,5 +1,6 @@
 import { Container, Typography } from "@mui/material";
 import { ColDef } from "ag-grid-community";
+import "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -46,6 +47,7 @@ export const OrphanCustomersDisplay = ({
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
                     rowSelection={"multiple"}
+                    animateRows={true}
                     overlayNoRowsTemplate="No orphan customers to display..."
                 />
             </div>
