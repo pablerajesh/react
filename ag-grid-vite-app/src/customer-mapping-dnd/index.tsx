@@ -1,8 +1,9 @@
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { GridApi, GridReadyEvent } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     getCustomerHierarchies,
     getOrphanCustomersFromBackend
@@ -14,10 +15,15 @@ import OrphanCustomersDisplay from "./orphan-customers";
 const CustomerMappingDnd = () => {
     const [customerHierarchies, setCustomerHierarchies] = useState<
         ICustomerHierarchy[] | undefined
-    >([]);
+    >(undefined);
     const [orphanCustomers, setOrphanCustomers] = useState<
         ICustomer[] | undefined
     >(undefined);
+    const parentChildGridContainrRef = useRef<HTMLDivElement | null>(null);
+    const [parentChildGridApi, setParentChildGridApi] =
+        useState<GridApi | null>(null);
+    const orphansGridContainrRef = useRef<HTMLDivElement | null>(null);
+    const [orphansGridApi, setOrphansGridApi] = useState<GridApi | null>(null);
 
     useEffect(() => {
         getCustomerHierarchies().then(customerHierarchies => {
@@ -28,6 +34,25 @@ const CustomerMappingDnd = () => {
             setOrphanCustomers(orphanCustomers);
         });
     }, []);
+
+    const handleParentChildGridReady = (event: GridReadyEvent): void => {
+        setParentChildGridApi(event.api);
+    };
+
+    const handleOrphansGridReady = (event: GridReadyEvent): void => {
+        setOrphansGridApi(event.api);
+    };
+
+    useEffect(() => {
+        if (parentChildGridApi && orphansGridApi) {
+            orphansGridApi.addRowDropZone(
+                parentChildGridApi.getRowDropZoneParams()
+            );
+            orphansGridApi.removeRowDropZone(
+                orphansGridApi.getRowDropZoneParams()
+            );
+        }
+    }, [parentChildGridApi, orphansGridApi]);
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -43,6 +68,8 @@ const CustomerMappingDnd = () => {
                 >
                     <CustomersWithParentsDisplay
                         customerHierarchies={customerHierarchies}
+                        gridContainerRef={parentChildGridContainrRef}
+                        onGridReady={handleParentChildGridReady}
                     />
                 </Grid>
                 <Grid
@@ -50,7 +77,11 @@ const CustomerMappingDnd = () => {
                     border={1}
                     borderColor={"#e0e0e0"}
                 >
-                    <OrphanCustomersDisplay orphanCustomers={orphanCustomers} />
+                    <OrphanCustomersDisplay
+                        orphanCustomers={orphanCustomers}
+                        gridContainerRef={orphansGridContainrRef}
+                        onGridReady={handleOrphansGridReady}
+                    />
                 </Grid>
             </Grid>
         </Box>

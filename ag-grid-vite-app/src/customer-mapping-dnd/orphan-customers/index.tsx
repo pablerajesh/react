@@ -1,8 +1,8 @@
 import { Container, Typography } from "@mui/material";
-import { ColDef } from "ag-grid-community";
+import { ColDef, GridReadyEvent } from "ag-grid-community";
 import "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
     customerColDefs,
     customerDefaultCollDef,
@@ -11,10 +11,14 @@ import {
 
 export interface IOrphanCustomersDisplayProps {
     orphanCustomers: ICustomer[] | undefined;
+    gridContainerRef: React.MutableRefObject<HTMLDivElement | null>;
+    onGridReady: (event: GridReadyEvent) => void;
 }
 
 export const OrphanCustomersDisplay = ({
-    orphanCustomers
+    orphanCustomers,
+    gridContainerRef,
+    onGridReady
 }: IOrphanCustomersDisplayProps) => {
     const defaultColDef = useMemo<ColDef<ICustomer>>(
         () => customerDefaultCollDef,
@@ -40,6 +44,7 @@ export const OrphanCustomersDisplay = ({
                     minHeight: "90vh",
                     width: "100%"
                 }}
+                ref={gridContainerRef}
             >
                 <AgGridReact
                     gridId="orphan-customers-grid"
@@ -48,9 +53,10 @@ export const OrphanCustomersDisplay = ({
                     defaultColDef={defaultColDef}
                     rowSelection={"multiple"}
                     rowDragManaged={true}
-                    rowDragMultiRow={true}
+                    suppressMoveWhenRowDragging={true}
                     animateRows={true}
                     overlayNoRowsTemplate="No orphan customers to display..."
+                    onGridReady={onGridReady}
                 />
             </div>
         </Container>
