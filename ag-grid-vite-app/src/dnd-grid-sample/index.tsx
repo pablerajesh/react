@@ -191,7 +191,7 @@ const DndGridExample = () => {
                 )}
             </div>
             <div
-                style={{ height: "100%" }}
+                style={{ height: "800px" }}
                 className="inner-col"
                 ref={side === "Left" ? eLeftGrid : eRightGrid}
             >
@@ -211,10 +211,7 @@ const DndGridExample = () => {
     );
 
     return (
-        <div
-            className="example-wrapper ag-theme-alpine"
-            style={{ height: "850px" }}
-        >
+        <div className="example-wrapper ag-theme-alpine">
             {getInnerGridCol("Left")}
             <div className="inner-col vertical-toolbar">
                 <span

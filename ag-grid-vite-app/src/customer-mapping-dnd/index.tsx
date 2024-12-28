@@ -45,8 +45,11 @@ const CustomerMappingDnd = () => {
             orphansGridApi.addRowDropZone(
                 parentChildGridApi.getRowDropZoneParams()
             );
-            orphansGridApi.removeRowDropZone(
+            parentChildGridApi.addRowDropZone(
                 orphansGridApi.getRowDropZoneParams()
+            );
+            parentChildGridApi.removeRowDropZone(
+                parentChildGridApi.getRowDropZoneParams()
             );
         }
     }, [parentChildGridApi, orphansGridApi]);
@@ -66,9 +69,10 @@ const CustomerMappingDnd = () => {
     };
 
     const onParentChildrenGridRowDragEnd = (_event: RowDragEndEvent): void => {
-        console.log("[rp] Orphans: ", _event.nodes);
-        console.log("[rp] Over node: ", _event.overNode?.data);
-        console.log("[rp] Parent: ", _event.overNode?.parent?.data);
+        console.log("[rp] Event: ", _event);
+        // console.log("[rp] Orphans: ", _event.nodes);
+        // console.log("[rp] Over node: ", _event.overNode?.data);
+        // console.log("[rp] Parent: ", _event.overNode?.parent?.data);
     };
 
     return (

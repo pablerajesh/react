@@ -3,6 +3,7 @@ import {
     ColDef,
     GetDataPath,
     GridReadyEvent,
+    RowDragCallbackParams,
     RowDragEndEvent
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
@@ -49,6 +50,9 @@ export const CustomersWithParentsDisplay = ({
             cellRendererParams: {
                 suppressCount: true,
                 checkbox: true
+            },
+            rowDrag: (params: RowDragCallbackParams) => {
+                return !(params.data as ICustomerHierarchy).isParent;
             }
         };
     }, []);
@@ -84,6 +88,8 @@ export const CustomersWithParentsDisplay = ({
                     groupDefaultExpanded={-1}
                     rowSelection={"multiple"}
                     rowDragManaged={true}
+                    rowDragMultiRow={true}
+                    suppressMoveWhenRowDragging={true}
                     suppressRowClickSelection={true}
                     getDataPath={getDataPath}
                     onGridReady={onGridReady}
