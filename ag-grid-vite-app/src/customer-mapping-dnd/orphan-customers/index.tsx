@@ -49,7 +49,7 @@ export const OrphanCustomersDisplay = ({
                 ref={gridContainerRef}
             >
                 <AgGridReact
-                    gridId="orphan-customers-grid"
+                    gridId="orphas-grid"
                     rowData={rowData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}

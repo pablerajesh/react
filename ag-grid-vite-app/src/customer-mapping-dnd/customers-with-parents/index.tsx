@@ -79,6 +79,7 @@ export const CustomersWithParentsDisplay = ({
                 ref={gridContainerRef}
             >
                 <AgGridReact
+                    gridId="parents-children-grid"
                     rowData={rowData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
