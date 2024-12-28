@@ -1,5 +1,10 @@
-import CustomerMappingDnd from "./customer-mapping-dnd";
+// import CustomerMappingDnd from "./customer-mapping-dnd";
 
-const App = () => <CustomerMappingDnd />;
+import GridExample from "./dnd-with-row-grouping";
+
+const App = () => (
+    /* <CustomerMappingDnd />; */
+    <GridExample />
+);
 
 export default App;
