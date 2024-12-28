@@ -59,13 +59,15 @@ const CustomerMappingDnd = () => {
         setOrphansGridApi(event.api);
     };
 
-    const onOrphanCustomersGridRowDragEnter = (
+    const handleOrphanCustomersGridRowDragEnter = (
         _event: RowDragEnterEvent
     ): void => {
         // console.log("[rp] Start: ", _event.nodes);
     };
 
-    const onParentChildrenGridRowDragEnd = (_event: RowDragEndEvent): void => {
+    const handleParentChildrenGridRowDragEnd = (
+        _event: RowDragEndEvent
+    ): void => {
         console.log("[rp] Event: ", _event);
         // console.log("[rp] Orphans: ", _event.nodes);
         // console.log("[rp] Over node: ", _event.overNode?.data);
@@ -88,7 +90,7 @@ const CustomerMappingDnd = () => {
                         customerHierarchies={customerHierarchies}
                         gridContainerRef={parentChildGridContainrRef}
                         onGridReady={handleParentChildGridReady}
-                        onRowDragEnd={onParentChildrenGridRowDragEnd}
+                        onRowDragEnd={handleParentChildrenGridRowDragEnd}
                     />
                 </Grid>
                 <Grid
@@ -100,7 +102,7 @@ const CustomerMappingDnd = () => {
                         orphanCustomers={orphanCustomers}
                         gridContainerRef={orphansGridContainrRef}
                         onGridReady={handleOrphansGridReady}
-                        onRowDragEnter={onOrphanCustomersGridRowDragEnter}
+                        onRowDragEnter={handleOrphanCustomersGridRowDragEnter}
                     />
                 </Grid>
             </Grid>
