@@ -60,18 +60,18 @@ const CustomerMappingDnd = () => {
     };
 
     const handleOrphanCustomersGridRowDragEnter = (
-        _event: RowDragEnterEvent
+        event: RowDragEnterEvent
     ): void => {
-        // console.log("[rp] Start: ", _event.nodes);
+        console.log("[rp] Start event: ", event);
     };
 
     const handleParentChildrenGridRowDragEnd = (
-        _event: RowDragEndEvent
+        event: RowDragEndEvent
     ): void => {
-        console.log("[rp] Event: ", _event);
-        // console.log("[rp] Orphans: ", _event.nodes);
-        // console.log("[rp] Over node: ", _event.overNode?.data);
-        // console.log("[rp] Parent: ", _event.overNode?.parent?.data);
+        console.log("[rp] End event: ", event);
+        // console.log("[rp] Orphans: ", event.nodes);
+        // console.log("[rp] Over node: ", event.overNode?.data);
+        // console.log("[rp] Parent: ", event.overNode?.parent?.data);
     };
 
     return (
