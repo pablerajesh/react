@@ -68,9 +68,10 @@ export const getChildCustomersFromBackend = (
 
 export const getCustomerHierarchies = (): Promise<ICustomerHierarchy[]> => {
     const customers: ICustomer[] = persistedCustomers;
-    const parents: ICustomer[] = persistedCustomers.filter(
-        customer => customer.isParent
-    );
+    const parents: ICustomer[] = persistedCustomers
+        .filter(customer => customer.isParent)
+        .sort((a, b) => a.name.localeCompare(b.name));
+
     let customerHierarchies: ICustomerHierarchy[] = [];
 
     parents.forEach(parent => {
@@ -78,9 +79,10 @@ export const getCustomerHierarchies = (): Promise<ICustomerHierarchy[]> => {
             path: [parent.name],
             ...parent
         });
-        const children: ICustomer[] = customers.filter(
-            customer => customer.parentId === parent.id
-        );
+        const children: ICustomer[] = customers
+            .filter(customer => customer.parentId === parent.id)
+            .sort((a, b) => a.name.localeCompare(b.name));
+
         children.forEach(child => {
             customerHierarchies.push({
                 path: [parent.name, child.name],
