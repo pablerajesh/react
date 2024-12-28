@@ -1,4 +1,4 @@
-import { ColDef } from "ag-grid-community";
+import { ColDef, IRowDragItem, IRowNode } from "ag-grid-community";
 
 export interface ICustomer {
     id: number;
@@ -26,6 +26,23 @@ export const customerColDefs: ColDef<ICustomer>[] = [
         headerCheckboxSelection: true,
         checkboxSelection: true,
         rowDrag: true,
+        rowDragText: (params: IRowDragItem) => {
+            const customersBeingDragged: ICustomer[] = params.rowNodes!.map(
+                (rowNode: IRowNode) => rowNode.data as ICustomer
+            );
+            const maxInlineCustomerNames: number = 3;
+            const customerNames = customersBeingDragged
+                .slice(0, maxInlineCustomerNames)
+                .map(customer => customer.name)
+                .join(", ");
+
+            if (customersBeingDragged.length > 3) {
+                return `Moving ${customerNames} ... (${
+                    customersBeingDragged.length - maxInlineCustomerNames
+                } more)`;
+            }
+            return `Moving ${customerNames}`;
+        },
         editable: false,
         flex: 2
     },
