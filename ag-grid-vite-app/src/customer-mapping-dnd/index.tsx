@@ -48,9 +48,6 @@ const CustomerMappingDnd = () => {
             parentChildGridApi.addRowDropZone(
                 orphansGridApi.getRowDropZoneParams()
             );
-            parentChildGridApi.removeRowDropZone(
-                parentChildGridApi.getRowDropZoneParams()
-            );
         }
     }, [parentChildGridApi, orphansGridApi]);
 
