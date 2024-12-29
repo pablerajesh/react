@@ -16,6 +16,7 @@ import {
     IRemovedOrphan
 } from "../common/types.def";
 import CustomersWithParentsDisplay from "./customers-with-parents";
+import "./module.styles.css";
 import OrphanCustomersDisplay from "./orphan-customers";
 
 const CustomerMappingDnd = () => {

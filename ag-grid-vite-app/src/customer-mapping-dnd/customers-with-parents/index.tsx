@@ -1,13 +1,19 @@
 import { Container, Typography } from "@mui/material";
 import {
+    CellClassParams,
     ColDef,
     GetDataPath,
+    GridApi,
     GridReadyEvent,
+    IRowNode,
+    RefreshCellsParams,
     RowDragCallbackParams,
-    RowDragEndEvent
+    RowDragEndEvent,
+    RowDragLeaveEvent,
+    RowDragMoveEvent
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
     customerDefaultCollDef,
     ICustomerHierarchy
@@ -18,6 +24,50 @@ export interface CustomersWithParentsDisplayProp {
     gridContainerRef: React.MutableRefObject<HTMLDivElement | null>;
     onGridReady: (event: GridReadyEvent) => void;
     onRowDragEnd: (event: RowDragEndEvent) => void;
+}
+
+let potentialParent: any = null;
+let cellClassRules = {
+    "hover-over": (params: CellClassParams) => {
+        return params.node === potentialParent;
+    }
+};
+
+const setPotentialParentForNode = (
+    api: GridApi,
+    overNode: IRowNode | undefined | null
+) => {
+    let newPotentialParent;
+    debugger;
+    if (overNode) {
+        newPotentialParent =
+            overNode.data.isParent === true ? overNode : overNode.parent;
+    } else {
+        newPotentialParent = null;
+    }
+    const alreadySelected = potentialParent === newPotentialParent;
+    if (alreadySelected) {
+        return;
+    }
+    // we refresh the previous selection (if it exists) to clear
+    // the highlighted and then the new selection.
+    const rowsToRefresh = [];
+    if (potentialParent) {
+        rowsToRefresh.push(potentialParent);
+    }
+    if (newPotentialParent) {
+        rowsToRefresh.push(newPotentialParent);
+    }
+    potentialParent = newPotentialParent;
+    refreshRows(api, rowsToRefresh);
+};
+
+function refreshRows(api: GridApi, rowsToRefresh: IRowNode[]) {
+    let params: RefreshCellsParams = {
+        rowNodes: rowsToRefresh,
+        force: true
+    };
+    api.refreshCells(params);
 }
 
 export const CustomersWithParentsDisplay = ({
@@ -35,7 +85,8 @@ export const CustomersWithParentsDisplay = ({
             headerName: "CUSTOMER CDOE",
             cellDataType: "text",
             editable: false,
-            flex: 2
+            flex: 2,
+            cellClassRules: cellClassRules
         }
     ]);
     const defaultColDef = useMemo<ColDef<ICustomerHierarchy>>(
@@ -51,9 +102,9 @@ export const CustomersWithParentsDisplay = ({
                 suppressCount: true,
                 checkbox: true
             },
-            rowDrag: (params: RowDragCallbackParams) => {
-                return !(params.data as ICustomerHierarchy).isParent;
-            }
+            rowDrag: (params: RowDragCallbackParams) =>
+                !(params.data as ICustomerHierarchy).isParent,
+            cellClassRules: cellClassRules
         };
     }, []);
     const getDataPath = useMemo<GetDataPath>(
@@ -64,6 +115,14 @@ export const CustomersWithParentsDisplay = ({
     useEffect(() => {
         setRowData(customerHierarchies);
     }, [customerHierarchies]);
+
+    const onRowDragMove = useCallback((event: RowDragMoveEvent) => {
+        setPotentialParentForNode(event.api, event.overNode);
+    }, []);
+
+    const onRowDragLeave = useCallback((event: RowDragLeaveEvent) => {
+        setPotentialParentForNode(event.api, event.overNode);
+    }, []);
 
     return (
         <Container sx={{ mt: 2 }}>
@@ -88,13 +147,15 @@ export const CustomersWithParentsDisplay = ({
                     animateRows={true}
                     groupDefaultExpanded={-1}
                     rowSelection={"multiple"}
-                    rowDragManaged={true}
+                    rowDragManaged={false}
                     rowDragMultiRow={true}
                     suppressMoveWhenRowDragging={true}
                     suppressRowClickSelection={true}
                     getDataPath={getDataPath}
                     onGridReady={onGridReady}
                     onRowDragEnd={onRowDragEnd}
+                    onRowDragMove={onRowDragMove}
+                    onRowDragLeave={onRowDragLeave}
                 />
             </div>
         </Container>
