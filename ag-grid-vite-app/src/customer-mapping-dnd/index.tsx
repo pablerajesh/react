@@ -61,9 +61,9 @@ const CustomerMappingDnd = () => {
     };
 
     const handleOrphanCustomersGridRowDragEnter = (
-        _event: RowDragEnterEvent
+        event: RowDragEnterEvent
     ): void => {
-        // console.log("[rp] Start event: ", event);
+        console.log("[rp] Start event: ", event);
     };
 
     const handleParentChildrenGridRowDragEnd = (
