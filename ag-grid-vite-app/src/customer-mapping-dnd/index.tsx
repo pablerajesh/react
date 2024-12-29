@@ -1,12 +1,7 @@
 import Grid from "@mui/material/Grid2";
 
 import { Box } from "@mui/material";
-import {
-    GridApi,
-    GridReadyEvent,
-    RowDragEndEvent,
-    RowDragEnterEvent
-} from "ag-grid-community";
+import { GridApi, GridReadyEvent, RowDragEndEvent } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import { useEffect, useRef, useState } from "react";
@@ -14,7 +9,12 @@ import {
     getCustomerHierarchies,
     getOrphanCustomersFromBackend
 } from "../common/service";
-import { ICustomer, ICustomerHierarchy } from "../common/types.def";
+import {
+    IAddedHierarchies,
+    ICustomer,
+    ICustomerHierarchy,
+    IRemovedOrphan
+} from "../common/types.def";
 import CustomersWithParentsDisplay from "./customers-with-parents";
 import OrphanCustomersDisplay from "./orphan-customers";
 
@@ -30,6 +30,10 @@ const CustomerMappingDnd = () => {
         useState<GridApi | null>(null);
     const orphansGridContainrRef = useRef<HTMLDivElement | null>(null);
     const [orphansGridApi, setOrphansGridApi] = useState<GridApi | null>(null);
+    const [addedHierarchies, setAddedHierarchies] = useState<
+        IAddedHierarchies[]
+    >([]);
+    const [removedOrphans, setRemovedOrphans] = useState<IRemovedOrphan[]>([]);
 
     useEffect(() => {
         getCustomerHierarchies().then(customerHierarchies => {
@@ -60,20 +64,9 @@ const CustomerMappingDnd = () => {
         setOrphansGridApi(event.api);
     };
 
-    const handleOrphanCustomersGridRowDragEnter = (
-        event: RowDragEnterEvent
-    ): void => {
-        console.log("[rp] Start event: ", event);
-    };
-
-    const handleParentChildrenGridRowDragEnd = (
+    const handleOrphansDroppedOnCusotmerHierarchies = (
         event: RowDragEndEvent
     ): void => {
-        // console.log("[rp] End event: ", event.overIndex);
-        // console.log("[rp] Orphans: ", event.nodes);
-        // console.log("[rp] Over node: ", event.overNode?.data);
-        // console.log("[rp] Parent: ", event.overNode?.parent?.data);
-
         const overNodeIndex: number = event.overIndex;
         if (overNodeIndex === 0) return;
 
@@ -87,12 +80,35 @@ const CustomerMappingDnd = () => {
         if (orphansDropped.length > 0 && droppedInsideParentNode) {
             const parent = droppedInsideParentNode.parent
                 ?.data as ICustomerHierarchy;
+            const parentId: number = parent.id;
+            const orphansDroppedIds: number[] = orphansDropped.map(o => o.id);
 
-            console.log("[rp] Parent: ", parent.id);
-            console.log(
-                "[rp] Orphans: ",
-                orphansDropped.map(o => o.id).join(", ")
+            const udpatedAddedHierarchies: IAddedHierarchies[] =
+                addedHierarchies.map((ur: IAddedHierarchies) => {
+                    if (ur.parentId === parentId) {
+                        return {
+                            ...ur,
+                            childIds: ur.childIds.concat(orphansDroppedIds)
+                        };
+                    }
+                    return ur;
+                });
+            setAddedHierarchies(udpatedAddedHierarchies);
+
+            const newCustomerHierarchies = orphansDropped.map(
+                (o: ICustomer) => {
+                    const customerHierarchy: ICustomerHierarchy = {
+                        ...o,
+                        path: [parent.name, o.name]
+                    };
+                    return customerHierarchy;
+                }
             );
+            const updatedCustomerHierarchies: ICustomerHierarchy[] =
+                customerHierarchies!
+                    .concat(newCustomerHierarchies)
+                    .sort((a, b) => a.name.localeCompare(b.name));
+            setCustomerHierarchies(updatedCustomerHierarchies);
         }
     };
 
@@ -112,7 +128,7 @@ const CustomerMappingDnd = () => {
                         customerHierarchies={customerHierarchies}
                         gridContainerRef={parentChildGridContainrRef}
                         onGridReady={handleParentChildGridReady}
-                        onRowDragEnd={handleParentChildrenGridRowDragEnd}
+                        onRowDragEnd={handleOrphansDroppedOnCusotmerHierarchies}
                     />
                 </Grid>
                 <Grid
@@ -124,7 +140,6 @@ const CustomerMappingDnd = () => {
                         orphanCustomers={orphanCustomers}
                         gridContainerRef={orphansGridContainrRef}
                         onGridReady={handleOrphansGridReady}
-                        onRowDragEnter={handleOrphanCustomersGridRowDragEnter}
                     />
                 </Grid>
             </Grid>

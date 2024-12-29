@@ -54,3 +54,12 @@ export const customerColDefs: ColDef<ICustomer>[] = [
         flex: 2
     }
 ];
+
+export interface IAddedHierarchies {
+    parentId: number;
+    childIds: number[];
+}
+
+export interface IRemovedOrphan {
+    id: number;
+}
