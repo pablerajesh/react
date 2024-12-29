@@ -48,8 +48,6 @@ const setPotentialParentForNode = (
     if (alreadySelected) {
         return;
     }
-    // we refresh the previous selection (if it exists) to clear
-    // the highlighted and then the new selection.
     const rowsToRefresh = [];
     if (potentialParent) {
         rowsToRefresh.push(potentialParent);
