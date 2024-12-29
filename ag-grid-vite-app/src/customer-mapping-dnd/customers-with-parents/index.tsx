@@ -28,9 +28,7 @@ export interface CustomersWithParentsDisplayProp {
 
 let potentialParent: any = null;
 let cellClassRules = {
-    "hover-over": (params: CellClassParams) => {
-        return params.node === potentialParent;
-    }
+    "hover-over": (params: CellClassParams) => params.node === potentialParent
 };
 
 const setPotentialParentForNode = (
@@ -121,6 +119,11 @@ export const CustomersWithParentsDisplay = ({
         setPotentialParentForNode(event.api, event.overNode);
     }, []);
 
+    const handleRowDragEnd = (event: RowDragEndEvent): void => {
+        onRowDragEnd(event);
+        setPotentialParentForNode(event.api, null);
+    };
+
     return (
         <Container sx={{ mt: 2 }}>
             <Typography variant="h5">PARENT & CHILD CUSTOMERS</Typography>
@@ -150,7 +153,7 @@ export const CustomersWithParentsDisplay = ({
                     suppressRowClickSelection={true}
                     getDataPath={getDataPath}
                     onGridReady={onGridReady}
-                    onRowDragEnd={onRowDragEnd}
+                    onRowDragEnd={handleRowDragEnd}
                     onRowDragMove={onRowDragMove}
                     onRowDragLeave={onRowDragLeave}
                 />
