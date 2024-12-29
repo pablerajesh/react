@@ -38,7 +38,6 @@ const setPotentialParentForNode = (
     overNode: IRowNode | undefined | null
 ) => {
     let newPotentialParent;
-    debugger;
     if (overNode) {
         newPotentialParent =
             overNode.data.isParent === true ? overNode : overNode.parent;
