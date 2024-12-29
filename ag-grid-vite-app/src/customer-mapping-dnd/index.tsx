@@ -70,7 +70,7 @@ const CustomerMappingDnd = () => {
         setOrphansGridApi(event.api);
     };
 
-    const handleOrphansDroppedOnCusotmerHierarchies = (
+    const handleDragEndOnCustomerHierararchies = (
         event: RowDragEndEvent
     ): void => {
         const overRowNode: IRowNode<ICustomerHierarchy> | undefined =
@@ -152,7 +152,7 @@ const CustomerMappingDnd = () => {
                         customerHierarchies={customerHierarchies}
                         gridContainerRef={parentChildGridContainrRef}
                         onGridReady={handleParentChildGridReady}
-                        onRowDragEnd={handleOrphansDroppedOnCusotmerHierarchies}
+                        onRowDragEnd={handleDragEndOnCustomerHierararchies}
                     />
                 </Grid>
                 <Grid
