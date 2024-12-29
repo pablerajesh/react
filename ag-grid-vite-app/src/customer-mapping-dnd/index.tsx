@@ -101,7 +101,7 @@ const CustomerMappingDnd = () => {
             addedHierarchies.concat(
                 orphansDropped.map(o => ({
                     parentId: parentDroppedInside.id,
-                    childIds: [o.id]
+                    childId: o.id
                 }))
             );
         setAddedHierarchies(nextAddedHierarchies);

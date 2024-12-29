@@ -57,7 +57,7 @@ export const customerColDefs: ColDef<ICustomer>[] = [
 
 export interface IAddedHierarchies {
     parentId: number;
-    childIds: number[];
+    childId: number;
 }
 
 export interface IRemovedOrphan {
