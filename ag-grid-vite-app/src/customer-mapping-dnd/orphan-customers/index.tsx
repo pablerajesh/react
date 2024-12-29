@@ -18,6 +18,7 @@ export interface IOrphanCustomersDisplayProps {
 export const OrphanCustomersDisplay = ({
     orphanCustomers,
     gridContainerRef,
+
     onGridReady
 }: IOrphanCustomersDisplayProps) => {
     const defaultColDef = useMemo<ColDef<ICustomer>>(
@@ -47,7 +48,7 @@ export const OrphanCustomersDisplay = ({
                 ref={gridContainerRef}
             >
                 <AgGridReact
-                    gridId="orphas-grid"
+                    gridId="orphans-grid"
                     rowData={rowData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}

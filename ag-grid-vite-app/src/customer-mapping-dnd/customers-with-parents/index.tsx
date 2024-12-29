@@ -22,7 +22,6 @@ import {
 export interface CustomersWithParentsDisplayProp {
     customerHierarchies?: ICustomerHierarchy[];
     gridContainerRef: React.MutableRefObject<HTMLDivElement | null>;
-    gridId: string;
     onGridReady: (event: GridReadyEvent) => void;
     onRowDragEnd: (event: RowDragEndEvent) => void;
 }
@@ -73,7 +72,6 @@ function refreshRows(api: GridApi, rowsToRefresh: IRowNode[]) {
 export const CustomersWithParentsDisplay = ({
     customerHierarchies,
     gridContainerRef,
-    gridId,
     onGridReady,
     onRowDragEnd
 }: CustomersWithParentsDisplayProp) => {
@@ -139,7 +137,7 @@ export const CustomersWithParentsDisplay = ({
                 ref={gridContainerRef}
             >
                 <AgGridReact
-                    gridId={gridId}
+                    gridId="parents-children-grid"
                     rowData={rowData}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}

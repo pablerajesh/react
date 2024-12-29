@@ -28,11 +28,9 @@ const CustomerMappingDnd = () => {
     const [customerHierarchies, setCustomerHierarchies] = useState<
         ICustomerHierarchy[] | undefined
     >(undefined);
-    const customerHierarchiesGridId: string = "parents-children-grid";
     const [orphanCustomers, setOrphanCustomers] = useState<
         ICustomer[] | undefined
     >(undefined);
-    const orphansGridId: string = "orphans-grid";
     const parentChildGridContainrRef = useRef<HTMLDivElement | null>(null);
     const [parentChildGridApi, setParentChildGridApi] =
         useState<GridApi | null>(null);
@@ -75,6 +73,7 @@ const CustomerMappingDnd = () => {
     const handleDragEndOnCustomerHierararchies = (
         event: RowDragEndEvent
     ): void => {
+        debugger;
         const overRowNode: IRowNode<ICustomerHierarchy> | undefined =
             event.overNode;
         if (overRowNode === undefined) return;
@@ -153,7 +152,6 @@ const CustomerMappingDnd = () => {
                     <CustomersWithParentsDisplay
                         customerHierarchies={customerHierarchies}
                         gridContainerRef={parentChildGridContainrRef}
-                        gridId={customerHierarchiesGridId}
                         onGridReady={handleParentChildGridReady}
                         onRowDragEnd={handleDragEndOnCustomerHierararchies}
                     />
@@ -166,7 +164,6 @@ const CustomerMappingDnd = () => {
                     <OrphanCustomersDisplay
                         orphanCustomers={orphanCustomers}
                         gridContainerRef={orphansGridContainrRef}
-                        gridId={orphansGridId}
                         onGridReady={handleOrphansGridReady}
                     />
                 </Grid>
