@@ -1,7 +1,12 @@
 import Grid from "@mui/material/Grid2";
 
 import { Box } from "@mui/material";
-import { GridApi, GridReadyEvent, RowDragEndEvent } from "ag-grid-community";
+import {
+    GridApi,
+    GridReadyEvent,
+    IRowNode,
+    RowDragEndEvent
+} from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import { useEffect, useRef, useState } from "react";
@@ -68,22 +73,22 @@ const CustomerMappingDnd = () => {
     const handleOrphansDroppedOnCusotmerHierarchies = (
         event: RowDragEndEvent
     ): void => {
-        const overNodeIndex: number = event.overIndex;
-        if (overNodeIndex === 0) return;
+        const overRowNode: IRowNode<ICustomerHierarchy> | undefined =
+            event.overNode;
+        if (overRowNode === undefined) return;
 
-        const lastRowNode = parentChildGridApi!.getDisplayedRowAtIndex(
-            parentChildGridApi!.getLastDisplayedRow()
-        );
-        const parentNodeDroppedInside =
-            overNodeIndex === -1 ? lastRowNode : event.overNode;
+        const overCustomerHierarchy: ICustomerHierarchy =
+            overRowNode.data as ICustomerHierarchy;
+        const parentNodeDroppedInside: IRowNode = overCustomerHierarchy.isParent
+            ? overRowNode
+            : overRowNode.parent!;
         const orphansDropped: ICustomer[] = event.nodes.map(
             node => node.data as ICustomer
         );
+        const parentDroppedInside: ICustomerHierarchy =
+            parentNodeDroppedInside.data as ICustomerHierarchy;
 
-        if (orphansDropped.length > 0 && parentNodeDroppedInside) {
-            const parentDroppedInside = parentNodeDroppedInside.parent
-                ?.data as ICustomerHierarchy;
-
+        if (orphansDropped.length > 0 && parentDroppedInside) {
             addAsChildren(orphansDropped, parentDroppedInside);
             removeFromOrphans(orphansDropped);
         }
