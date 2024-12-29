@@ -5,7 +5,8 @@ import {
     GridApi,
     GridReadyEvent,
     IRowNode,
-    RowDragEndEvent
+    RowDragEndEvent,
+    RowDragEnterEvent
 } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
@@ -40,6 +41,7 @@ const CustomerMappingDnd = () => {
         IAddedHierarchies[]
     >([]);
     const [removedOrphans, setRemovedOrphans] = useState<IRemovedOrphan[]>([]);
+    let rowDragInitiater: "orphans" | "parent-child" | undefined = undefined;
 
     useEffect(() => {
         getCustomerHierarchies().then(customerHierarchies => {
@@ -70,10 +72,16 @@ const CustomerMappingDnd = () => {
         setOrphansGridApi(event.api);
     };
 
-    const handleDragEndOnCustomerHierararchies = (
+    const handleRowDragEndOnCustomerHierararchies = (
         event: RowDragEndEvent
     ): void => {
         debugger;
+        if (
+            rowDragInitiater === undefined ||
+            rowDragInitiater === "parent-child"
+        )
+            return;
+
         const overRowNode: IRowNode<ICustomerHierarchy> | undefined =
             event.overNode;
         if (overRowNode === undefined) return;
@@ -137,6 +145,10 @@ const CustomerMappingDnd = () => {
         setOrphanCustomers(updatedOrphanCustomers);
     };
 
+    const handleRowDragEnterOnOrphans = (_event: RowDragEnterEvent): void => {
+        rowDragInitiater = "orphans";
+    };
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid
@@ -153,7 +165,7 @@ const CustomerMappingDnd = () => {
                         customerHierarchies={customerHierarchies}
                         gridContainerRef={parentChildGridContainrRef}
                         onGridReady={handleParentChildGridReady}
-                        onRowDragEnd={handleDragEndOnCustomerHierararchies}
+                        onRowDragEnd={handleRowDragEndOnCustomerHierararchies}
                     />
                 </Grid>
                 <Grid
@@ -165,6 +177,7 @@ const CustomerMappingDnd = () => {
                         orphanCustomers={orphanCustomers}
                         gridContainerRef={orphansGridContainrRef}
                         onGridReady={handleOrphansGridReady}
+                        onRowDragEnter={handleRowDragEnterOnOrphans}
                     />
                 </Grid>
             </Grid>
