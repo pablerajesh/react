@@ -1,5 +1,5 @@
 import { Container, Typography } from "@mui/material";
-import { ColDef, GridReadyEvent, RowDragEnterEvent } from "ag-grid-community";
+import { ColDef, GridReadyEvent } from "ag-grid-community";
 import "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import React, { useEffect, useMemo, useState } from "react";
@@ -13,14 +13,12 @@ export interface IOrphanCustomersDisplayProps {
     orphanCustomers: ICustomer[] | undefined;
     gridContainerRef: React.MutableRefObject<HTMLDivElement | null>;
     onGridReady: (event: GridReadyEvent) => void;
-    onRowDragEnter: (event: RowDragEnterEvent) => void;
 }
 
 export const OrphanCustomersDisplay = ({
     orphanCustomers,
     gridContainerRef,
-    onGridReady,
-    onRowDragEnter
+    onGridReady
 }: IOrphanCustomersDisplayProps) => {
     const defaultColDef = useMemo<ColDef<ICustomer>>(
         () => customerDefaultCollDef,
@@ -60,7 +58,6 @@ export const OrphanCustomersDisplay = ({
                     animateRows={true}
                     overlayNoRowsTemplate="No orphan customers to display..."
                     onGridReady={onGridReady}
-                    onRowDragEnter={onRowDragEnter}
                 />
             </div>
         </Container>
