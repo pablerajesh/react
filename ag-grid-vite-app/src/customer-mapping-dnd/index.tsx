@@ -73,29 +73,29 @@ const CustomerMappingDnd = () => {
         const lastRowNode = parentChildGridApi!.getDisplayedRowAtIndex(
             parentChildGridApi!.getLastDisplayedRow()
         );
-        const droppedInsideParentNode =
+        const parentNodeDroppedInside =
             overNodeIndex === -1 ? lastRowNode : event.overNode;
         const orphansDropped: ICustomer[] = event.nodes.map(
             node => node.data as ICustomer
         );
 
-        if (orphansDropped.length > 0 && droppedInsideParentNode) {
-            const parent = droppedInsideParentNode.parent
+        if (orphansDropped.length > 0 && parentNodeDroppedInside) {
+            const parentDroppedInside = parentNodeDroppedInside.parent
                 ?.data as ICustomerHierarchy;
 
-            addAsChildren(orphansDropped, parent);
+            addAsChildren(orphansDropped, parentDroppedInside);
             removeFromOrphans(orphansDropped);
         }
     };
 
     const addAsChildren = (
         orphansDropped: ICustomer[],
-        parent: ICustomerHierarchy
+        parentDroppedInside: ICustomerHierarchy
     ): void => {
         const orphansDroppedIds: number[] = orphansDropped.map(o => o.id);
         const nextAddedHierarchies: IAddedHierarchies[] = addedHierarchies.map(
             (ur: IAddedHierarchies) => {
-                if (ur.parentId === parent.id) {
+                if (ur.parentId === parentDroppedInside.id) {
                     return {
                         ...ur,
                         childIds: ur.childIds.concat(orphansDroppedIds)
@@ -109,7 +109,7 @@ const CustomerMappingDnd = () => {
         const newCustomerHierarchies = orphansDropped.map((o: ICustomer) => {
             const customerHierarchy: ICustomerHierarchy = {
                 ...o,
-                path: [parent.name, o.name]
+                path: [parentDroppedInside.name, o.name]
             };
             return customerHierarchy;
         });
