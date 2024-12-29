@@ -56,11 +56,6 @@ const CustomerMappingDnd = () => {
         }
     }, [parentChildGridApi, orphansGridApi]);
 
-    useEffect(() => {
-        console.log("[rp] addedHierarchies", addedHierarchies);
-        console.log("[rp] removedOrphans", removedOrphans);
-    }, [addedHierarchies, removedOrphans]);
-
     const handleParentChildGridReady = (event: GridReadyEvent): void => {
         setParentChildGridApi(event.api);
     };
