@@ -56,6 +56,11 @@ const CustomerMappingDnd = () => {
         }
     }, [parentChildGridApi, orphansGridApi]);
 
+    useEffect(() => {
+        console.log("[rp] addedHierarchies", addedHierarchies);
+        console.log("[rp] removedOrphans", removedOrphans);
+    }, [addedHierarchies, removedOrphans]);
+
     const handleParentChildGridReady = (event: GridReadyEvent): void => {
         setParentChildGridApi(event.api);
     };
@@ -92,18 +97,13 @@ const CustomerMappingDnd = () => {
         orphansDropped: ICustomer[],
         parentDroppedInside: ICustomerHierarchy
     ): void => {
-        const orphansDroppedIds: number[] = orphansDropped.map(o => o.id);
-        const nextAddedHierarchies: IAddedHierarchies[] = addedHierarchies.map(
-            (ur: IAddedHierarchies) => {
-                if (ur.parentId === parentDroppedInside.id) {
-                    return {
-                        ...ur,
-                        childIds: ur.childIds.concat(orphansDroppedIds)
-                    };
-                }
-                return ur;
-            }
-        );
+        const nextAddedHierarchies: IAddedHierarchies[] =
+            addedHierarchies.concat(
+                orphansDropped.map(o => ({
+                    parentId: parentDroppedInside.id,
+                    childIds: [o.id]
+                }))
+            );
         setAddedHierarchies(nextAddedHierarchies);
 
         const newCustomerHierarchies = orphansDropped.map((o: ICustomer) => {
