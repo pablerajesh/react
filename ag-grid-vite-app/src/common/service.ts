@@ -70,7 +70,7 @@ export const getCustomerHierarchies = (): Promise<ICustomerHierarchy[]> => {
     const customers: ICustomer[] = persistedCustomers;
     const parents: ICustomer[] = persistedCustomers
         .filter(customer => customer.isParent)
-        .sort((a, b) => a.name.localeCompare(b.name));
+        .sort((a, b) => a.id - b.id);
 
     let customerHierarchies: ICustomerHierarchy[] = [];
 
@@ -81,7 +81,7 @@ export const getCustomerHierarchies = (): Promise<ICustomerHierarchy[]> => {
         });
         const children: ICustomer[] = customers
             .filter(customer => customer.parentId === parent.id)
-            .sort((a, b) => a.name.localeCompare(b.name));
+            .sort((a, b) => a.id - b.id);
 
         children.forEach(child => {
             customerHierarchies.push({

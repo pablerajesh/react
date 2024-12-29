@@ -107,12 +107,12 @@ const CustomerMappingDnd = () => {
             const updatedCustomerHierarchies: ICustomerHierarchy[] =
                 customerHierarchies!
                     .concat(newCustomerHierarchies)
-                    .sort((a, b) => a.name.localeCompare(b.name));
+                    .sort((a, b) => a.id - b.id);
             setCustomerHierarchies(updatedCustomerHierarchies);
 
             const updatedOrphanCustomers: ICustomer[] = orphanCustomers!
                 .filter(o => !orphansDroppedIds.includes(o.id))
-                .sort((a, b) => a.name.localeCompare(b.name));
+                .sort((a, b) => a.id - b.id);
             setOrphanCustomers(updatedOrphanCustomers);
         }
     };
