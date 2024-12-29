@@ -75,46 +75,64 @@ const CustomerMappingDnd = () => {
         );
         const droppedInsideParentNode =
             overNodeIndex === -1 ? lastRowNode : event.overNode;
-        const orphansDropped = event.nodes.map(node => node.data as ICustomer);
+        const orphansDropped: ICustomer[] = event.nodes.map(
+            node => node.data as ICustomer
+        );
 
         if (orphansDropped.length > 0 && droppedInsideParentNode) {
             const parent = droppedInsideParentNode.parent
                 ?.data as ICustomerHierarchy;
-            const parentId: number = parent.id;
-            const orphansDroppedIds: number[] = orphansDropped.map(o => o.id);
 
-            const udpatedAddedHierarchies: IAddedHierarchies[] =
-                addedHierarchies.map((ur: IAddedHierarchies) => {
-                    if (ur.parentId === parentId) {
-                        return {
-                            ...ur,
-                            childIds: ur.childIds.concat(orphansDroppedIds)
-                        };
-                    }
-                    return ur;
-                });
-            setAddedHierarchies(udpatedAddedHierarchies);
-
-            const newCustomerHierarchies = orphansDropped.map(
-                (o: ICustomer) => {
-                    const customerHierarchy: ICustomerHierarchy = {
-                        ...o,
-                        path: [parent.name, o.name]
-                    };
-                    return customerHierarchy;
-                }
-            );
-            const updatedCustomerHierarchies: ICustomerHierarchy[] =
-                customerHierarchies!
-                    .concat(newCustomerHierarchies)
-                    .sort((a, b) => a.id - b.id);
-            setCustomerHierarchies(updatedCustomerHierarchies);
-
-            const updatedOrphanCustomers: ICustomer[] = orphanCustomers!
-                .filter(o => !orphansDroppedIds.includes(o.id))
-                .sort((a, b) => a.id - b.id);
-            setOrphanCustomers(updatedOrphanCustomers);
+            addAsChildren(orphansDropped, parent);
+            removeFromOrphans(orphansDropped);
         }
+    };
+
+    const addAsChildren = (
+        orphansDropped: ICustomer[],
+        parent: ICustomerHierarchy
+    ): void => {
+        const orphansDroppedIds: number[] = orphansDropped.map(o => o.id);
+        const nextAddedHierarchies: IAddedHierarchies[] = addedHierarchies.map(
+            (ur: IAddedHierarchies) => {
+                if (ur.parentId === parent.id) {
+                    return {
+                        ...ur,
+                        childIds: ur.childIds.concat(orphansDroppedIds)
+                    };
+                }
+                return ur;
+            }
+        );
+        setAddedHierarchies(nextAddedHierarchies);
+
+        const newCustomerHierarchies = orphansDropped.map((o: ICustomer) => {
+            const customerHierarchy: ICustomerHierarchy = {
+                ...o,
+                path: [parent.name, o.name]
+            };
+            return customerHierarchy;
+        });
+        const nextCustomerHierarchies: ICustomerHierarchy[] =
+            customerHierarchies!
+                .concat(newCustomerHierarchies)
+                .sort((a, b) => a.id - b.id);
+        setCustomerHierarchies(nextCustomerHierarchies);
+    };
+
+    const removeFromOrphans = (orphansDropped: ICustomer[]): void => {
+        const orphansDroppedIds: number[] = orphansDropped.map(o => o.id);
+        const nextRemovedOrphans: IRemovedOrphan[] = removedOrphans.concat(
+            orphansDroppedIds.map(i => ({
+                id: i
+            }))
+        );
+        setRemovedOrphans(nextRemovedOrphans);
+
+        const updatedOrphanCustomers: ICustomer[] = orphanCustomers!
+            .filter(o => !orphansDroppedIds.includes(o.id))
+            .sort((a, b) => a.id - b.id);
+        setOrphanCustomers(updatedOrphanCustomers);
     };
 
     return (
