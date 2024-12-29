@@ -15,7 +15,8 @@ export interface ICustomerHierarchy extends ICustomer {
 
 export const customerDefaultCollDef: ColDef = {
     flex: 1,
-    sortable: true
+    sortable: true,
+    resizable: true
 };
 
 export const customerColDefs: ColDef<ICustomer>[] = [
