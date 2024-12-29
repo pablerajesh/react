@@ -1,6 +1,6 @@
 import { ICustomer, ICustomerHierarchy } from "./types.def";
 
-const totalCustomers: number = 30,
+const totalCustomers: number = 30 * 1,
     slotSize: number = 10;
 
 const isParentCustomer = (id: number) =>

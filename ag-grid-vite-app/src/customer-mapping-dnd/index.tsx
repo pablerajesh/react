@@ -44,13 +44,15 @@ const CustomerMappingDnd = () => {
     let rowDragInitiater: "orphans" | "parent-child" | undefined = undefined;
 
     useEffect(() => {
-        getCustomerHierarchies().then(customerHierarchies => {
-            setCustomerHierarchies(customerHierarchies);
-        });
+        setTimeout(() => {
+            getCustomerHierarchies().then(customerHierarchies => {
+                setCustomerHierarchies(customerHierarchies);
+            });
 
-        getOrphanCustomersFromBackend().then(orphanCustomers => {
-            setOrphanCustomers(orphanCustomers);
-        });
+            getOrphanCustomersFromBackend().then(orphanCustomers => {
+                setOrphanCustomers(orphanCustomers);
+            });
+        }, 0);
     }, []);
 
     useEffect(() => {
