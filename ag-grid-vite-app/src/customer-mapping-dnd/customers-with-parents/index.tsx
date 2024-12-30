@@ -1,5 +1,6 @@
 import {
     CellClassParams,
+    CellClassRules,
     ColDef,
     GetDataPath,
     GridApi,
@@ -26,7 +27,10 @@ export interface CustomersWithParentsDisplayProp {
 }
 
 let potentialParentNode: IRowNode<ICustomerHierarchy> | null = null;
-let cellClassRules = {
+const potentialParentNodeHighlighterCssRule: CellClassRules<
+    ICustomerHierarchy,
+    any
+> = {
     "hover-over": (params: CellClassParams) =>
         params.node === potentialParentNode
 };
@@ -85,7 +89,7 @@ export const CustomersWithParentsDisplay = ({
             cellDataType: "text",
             editable: false,
             flex: 2,
-            cellClassRules: cellClassRules
+            cellClassRules: potentialParentNodeHighlighterCssRule
         }
     ]);
     const defaultColDef = useMemo<ColDef<ICustomerHierarchy>>(
@@ -103,7 +107,7 @@ export const CustomersWithParentsDisplay = ({
             },
             rowDrag: (params: RowDragCallbackParams) =>
                 !(params.data as ICustomerHierarchy).isParent,
-            cellClassRules: cellClassRules
+            cellClassRules: potentialParentNodeHighlighterCssRule
         };
     }, []);
     const getDataPath = useMemo<GetDataPath>(
@@ -149,7 +153,7 @@ export const CustomersWithParentsDisplay = ({
                     autoGroupColumnDef={autoGroupColumnDef}
                     treeData={true}
                     animateRows={true}
-                    groupDefaultExpanded={0}
+                    groupDefaultExpanded={-1}
                     rowSelection={"multiple"}
                     rowDragManaged={false}
                     rowDragMultiRow={true}
