@@ -1,4 +1,3 @@
-import { Container, Typography } from "@mui/material";
 import {
     CellClassParams,
     ColDef,
@@ -6,18 +5,18 @@ import {
     GridApi,
     GridReadyEvent,
     IRowNode,
-    RefreshCellsParams,
     RowDragCallbackParams,
     RowDragEndEvent,
     RowDragLeaveEvent,
     RowDragMoveEvent
 } from "ag-grid-community";
-import { AgGridReact } from "ag-grid-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import {
     customerDefaultCollDef,
     ICustomerHierarchy
 } from "../../common/types.def";
+import { Container, Typography } from "@mui/material";
+import { AgGridReact } from "ag-grid-react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 
 export interface CustomersWithParentsDisplayProp {
     customerHierarchies?: ICustomerHierarchy[];
@@ -26,44 +25,49 @@ export interface CustomersWithParentsDisplayProp {
     onRowDragEnd: (event: RowDragEndEvent) => void;
 }
 
-let potentialParent: any = null;
+let potentialParentNode: IRowNode<ICustomerHierarchy> | null = null;
 let cellClassRules = {
-    "hover-over": (params: CellClassParams) => params.node === potentialParent
+    "hover-over": (params: CellClassParams) =>
+        params.node === potentialParentNode
 };
 
-const setPotentialParentForNode = (
+const setPotentialParentNode = (
     api: GridApi,
     overNode: IRowNode | undefined | null
 ) => {
-    let newPotentialParent;
-    if (overNode) {
-        newPotentialParent =
-            overNode.data.isParent === true ? overNode : overNode.parent;
-    } else {
-        newPotentialParent = null;
-    }
-    const alreadySelected = potentialParent === newPotentialParent;
-    if (alreadySelected) {
-        return;
-    }
-    const rowsToRefresh = [];
-    if (potentialParent) {
-        rowsToRefresh.push(potentialParent);
-    }
-    if (newPotentialParent) {
-        rowsToRefresh.push(newPotentialParent);
-    }
-    potentialParent = newPotentialParent;
+    debugger;
+
+    const newPotentialParent: IRowNode<ICustomerHierarchy> | null = overNode
+        ? getNewPotentialParentNode(overNode)
+        : null;
+
+    const alreadySelected = potentialParentNode === newPotentialParent;
+    if (alreadySelected) return;
+
+    const rowsToRefresh: IRowNode<ICustomerHierarchy>[] = [];
+    if (potentialParentNode) rowsToRefresh.push(potentialParentNode);
+    if (newPotentialParent) rowsToRefresh.push(newPotentialParent);
+
+    potentialParentNode = newPotentialParent;
     refreshRows(api, rowsToRefresh);
 };
 
-function refreshRows(api: GridApi, rowsToRefresh: IRowNode[]) {
-    let params: RefreshCellsParams = {
+const getNewPotentialParentNode = (
+    overNode: IRowNode<ICustomerHierarchy>
+): IRowNode<ICustomerHierarchy> | null =>
+    (overNode.data as ICustomerHierarchy).isParent === true
+        ? overNode
+        : overNode.parent;
+
+const refreshRows = (
+    api: GridApi,
+    rowsToRefresh: IRowNode<ICustomerHierarchy>[]
+): void => {
+    api.refreshCells({
         rowNodes: rowsToRefresh,
         force: true
-    };
-    api.refreshCells(params);
-}
+    });
+};
 
 export const CustomersWithParentsDisplay = ({
     customerHierarchies,
@@ -112,16 +116,16 @@ export const CustomersWithParentsDisplay = ({
     }, [customerHierarchies]);
 
     const onRowDragMove = useCallback((event: RowDragMoveEvent) => {
-        setPotentialParentForNode(event.api, event.overNode);
+        setPotentialParentNode(event.api, event.overNode);
     }, []);
 
     const onRowDragLeave = useCallback((event: RowDragLeaveEvent) => {
-        setPotentialParentForNode(event.api, event.overNode);
+        setPotentialParentNode(event.api, event.overNode);
     }, []);
 
     const handleRowDragEnd = (event: RowDragEndEvent): void => {
         onRowDragEnd(event);
-        setPotentialParentForNode(event.api, null);
+        setPotentialParentNode(event.api, null);
     };
 
     return (
