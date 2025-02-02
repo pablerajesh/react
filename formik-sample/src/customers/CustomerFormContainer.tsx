@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import CustomerForm from "./CustomerForm";
 import {
@@ -20,18 +20,29 @@ const CustomerFormContainer = () => {
         <Grid item xs={12} display={"flex"} justifyContent={"left"}>
           <CustomerForm initialValues={initialValues} />
         </Grid>
-        <Grid item xs={6} display={"flex"} justifyContent={"left"}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() =>
-              setInitialValues({
-                customers: initialAlternateCustomers
-              })
-            }
+        <Grid item xs={12}>
+          <Stack
+            direction={"row"}
+            spacing={2}
+            p={2}
+            width={"26rem"}
+            justifyContent={"right"}
           >
-            Change Initial Values
-          </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() =>
+                setInitialValues({
+                  customers: initialAlternateCustomers
+                })
+              }
+            >
+              Change Initial Values
+            </Button>
+            <Button variant="contained" color="primary">
+              Submit
+            </Button>
+          </Stack>
         </Grid>
       </Grid>
     </Box>
