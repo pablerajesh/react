@@ -1,5 +1,5 @@
-import ParentComponent from "./collection-props/ParentComponent";
+import CustomerFormContainer from "./customers/CustomerFormContainer";
 
-const App = () => <ParentComponent />;
+const App = () => <CustomerFormContainer />;
 
 export default App;
