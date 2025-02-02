@@ -1,11 +1,12 @@
 import { useState } from "react";
 import ChildComponent from "./ChildComponent";
+import { Friend } from "./types.def";
 
 const ParentComponent = () => {
-  const [initialValues, setInitialValues] = useState({
+  const [initialValues, setInitialValues] = useState<{ friends: Friend[] }>({
     friends: [
-      { name: "Alice", age: 25 },
-      { name: "Bob", age: 24 }
+      { id: 1, name: "Alice", age: 25 },
+      { id: 2, name: "Bob", age: 24 }
     ]
   });
 
@@ -17,8 +18,8 @@ const ParentComponent = () => {
         onClick={() =>
           setInitialValues({
             friends: [
-              { name: "Charlie", age: 30 },
-              { name: "Dana", age: 28 }
+              { id: 3, name: "Charlie", age: 30 },
+              { id: 4, name: "Dana", age: 28 }
             ]
           })
         }

@@ -1,6 +1,5 @@
 // ChildComponent.tsx
 import { Field, FieldArray, Form, Formik } from "formik";
-import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { Friend } from "./types.def";
 
@@ -21,7 +20,7 @@ const validationSchema = Yup.object({
   )
 });
 
-const ChildComponent: React.FC<ChildComponentProps> = ({ initialValues }) => {
+const ChildComponent = ({ initialValues }: ChildComponentProps) => {
   return (
     <Formik
       initialValues={initialValues}
@@ -31,18 +30,14 @@ const ChildComponent: React.FC<ChildComponentProps> = ({ initialValues }) => {
       }}
       enableReinitialize // Add this line to enable reinitializing the form
     >
-      {({ values, setValues }) => {
-        useEffect(() => {
-          setValues(initialValues); // Manually update Formik values
-        }, [initialValues, setValues]);
-
+      {({ values }) => {
         return (
           <Form>
             <FieldArray name="friends">
               {({ push, remove }) => (
                 <div>
                   {values.friends.map((_friend, index) => (
-                    <div key={index}>
+                    <div key={_friend.id}>
                       <Field
                         name={`friends.${index}.name`}
                         placeholder="Name"
@@ -59,7 +54,13 @@ const ChildComponent: React.FC<ChildComponentProps> = ({ initialValues }) => {
                   ))}
                   <button
                     type="button"
-                    onClick={() => push({ name: "", age: 0 })}
+                    onClick={() =>
+                      push({
+                        id: values.friends.length + 1,
+                        name: "",
+                        age: 0
+                      })
+                    }
                   >
                     Add Friend
                   </button>
