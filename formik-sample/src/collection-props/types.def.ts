@@ -3,3 +3,7 @@ export interface Friend {
   name: string;
   age: number;
 }
+
+export interface FormValues {
+  friends: Friend[];
+}

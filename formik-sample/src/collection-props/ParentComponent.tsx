@@ -1,9 +1,9 @@
 import { useState } from "react";
 import ChildComponent from "./ChildComponent";
-import { Friend } from "./types.def";
+import { FormValues } from "./types.def";
 
 const ParentComponent = () => {
-  const [initialValues, setInitialValues] = useState<{ friends: Friend[] }>({
+  const [initialValues, setInitialValues] = useState<FormValues>({
     friends: [
       { id: 1, name: "Alice", age: 25 },
       { id: 2, name: "Bob", age: 24 }

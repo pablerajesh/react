@@ -1,11 +1,7 @@
 // ChildComponent.tsx
 import { Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Friend } from "./types.def";
-
-interface FormValues {
-  friends: Friend[];
-}
+import { FormValues } from "./types.def";
 
 interface ChildComponentProps {
   initialValues: FormValues;
