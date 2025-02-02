@@ -17,10 +17,10 @@ const CustomerFormContainer = () => {
       <Typography variant="h4">CUSTOMERS</Typography>
 
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs={12} display={"flex"} justifyContent={"left"}>
           <CustomerForm initialValues={initialValues} />
         </Grid>
-        <Grid item xs={4} display={"flex"} justifyContent={"right"}>
+        <Grid item xs={6} display={"flex"} justifyContent={"left"}>
           <Button
             variant="contained"
             color="primary"
