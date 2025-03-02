@@ -1,5 +1,5 @@
-import CustomerFormContainer from "./customers/CustomerFormContainer";
+import SnackBarDemo from "./mui-snackbar/SnackBarDemo";
 
-const App = () => <CustomerFormContainer />;
+const App = () => <SnackBarDemo />;
 
 export default App;
