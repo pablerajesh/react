@@ -1,5 +1,5 @@
-import SnackBarDemo from "./mui-snackbar/SnackBarDemo";
+import AsyncDemo from "./async/AsyncDemo";
 
-const App = () => <SnackBarDemo />;
+const App = () => <AsyncDemo />;
 
 export default App;

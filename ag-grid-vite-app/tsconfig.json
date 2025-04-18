@@ -1,7 +1,26 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+    "files": [],
+    "references": [
+        { "path": "./tsconfig.app.json" },
+        { "path": "./tsconfig.node.json" }
+    ],
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom",
+    "transform": {
+        "^.+\\.(ts|tsx)$": "ts-jest",
+        "^.+\\.(css|less|sass|scss|png|jpg|gif|svg)$": "jest-transform-stub"
+    },
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "jsx": "react-jsx",
+        "baseUrl": ".",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "paths": {}
+    },
+    "include": ["src", "**/*.ts", "**/*.tsx", "**/**/*.ts", "**/**/*.tsx"],
+    "exclude": ["node_modules"]
 }
